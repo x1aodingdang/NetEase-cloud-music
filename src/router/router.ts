@@ -5,10 +5,6 @@ export default [
     path: "/home",
     component: Home
   },
-  {
-    path: "/home2",
-    component: Home
-  },
   // {
   //   path: "/tacos",
   //   component: Tacos,
