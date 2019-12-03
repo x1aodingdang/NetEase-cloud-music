@@ -1,26 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect
+} from "react-router-dom";
+import routes from "./router/router";
 
-const App: React.FC = () => {
+export default function RouteConfigExample() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Switch>
+        {routes.map((route, i) => (
+          <RouteWithSubRoutes key={i} {...route}></RouteWithSubRoutes>
+        ))}
+      </Switch>
+    </Router>
   );
 }
 
-export default App;
+function RouteWithSubRoutes(route: any) {
+  return (
+    <Route
+      path={route.path}
+      render={props =>
+        route.redirect ? (
+          <Redirect exact to={{ pathname: route.redirect }}></Redirect>
+        ) : (
+          <route.component {...props} routes={route.routes} />
+        )
+      }
+    ></Route>
+  );
+}
