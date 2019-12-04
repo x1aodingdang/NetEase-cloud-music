@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "css/*": ["src/assets/style/*"]
+      // "views/*": ["src/views/home/*"]
+      // "components/*": ["src/app/components/*"],
+      // "common/*": ["src/common/*"],
+      // "api/*": ["src/api/*"],
+      // "reuse/*": ["src/app/reusablecomponents/*"],
+      // "actions/*": ["src/app/actions/*"],
+      // "reducers/*": ["src/app/reducers/*"]
+      // "store/*": ["src/app/store/*"]
+    }
+  }
+}
