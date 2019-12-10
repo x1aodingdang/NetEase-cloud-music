@@ -34,7 +34,13 @@ export default class Slide extends React.Component {
     return (
       <div className="home-banner">
         <WingBlank>
-          <Carousel autoplay={true} infinite>
+          <Carousel
+            autoplay={true}
+            infinite
+            dotActiveStyle={{
+              backgroundColor: "#eb4d44"
+            }}
+          >
             {this.state.data.map((item: any) => {
               const { pic, bannerId, url, typeTitle, titleColor } = item;
               return (

@@ -1,0 +1,28 @@
+.home-category {
+  height: 3.38rem;
+  padding: 0 0.48rem;
+  border-bottom: 1px solid #e6e6e6;
+
+  .category-box {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: space-between;
+
+    .category-icon {
+      width: 1.4rem;
+      height: 1.4rem;
+
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .category-name {
+      text-align: center;
+      color: #666;
+      margin-top: 0.3rem;
+    }
+  }
+}
