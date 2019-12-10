@@ -4,6 +4,7 @@ import * as React from "react";
 import "./index.scss";
 import Header from "../../components/Header/";
 import Slide from "./components/slide/";
+import HomeCategory from "./components/category/";
 
 export interface Props {
   name: string;
@@ -18,6 +19,7 @@ export default class Home extends React.Component<Props> {
         <Header />
         {/* 轮播图 */}
         <Slide />
+        <HomeCategory />
       </div>
     );
   }
