@@ -1,3 +1,5 @@
+import { async } from "q";
+
 export const API = "http://localhost:9000";
 
 type httpOptType = {
@@ -5,7 +7,7 @@ type httpOptType = {
   data?: {}; // 请求的数据  json 格式
   headers?: {}; // 请求头
 };
-export const http = (url: string, opt: httpOptType) => {
+export const http = (url: string, opt?: httpOptType) => {
   if (typeof window.fetch !== "function") {
     const errorMsg = "浏览器不支持 fetch 请更换最新版chrome浏览器";
     alert(errorMsg);
@@ -13,7 +15,7 @@ export const http = (url: string, opt: httpOptType) => {
   }
 
   //   body?: string; // 请求的数据  这个是吧 data 转成 string
-  const { method = "get", data, headers } = opt;
+  const { method = "get", data = {}, headers = {} } = opt || {};
   const isGet = method === "get";
   // if (isGet) {
   url = `${API}${url}${isGet && objToQueryStr(data)}`;
@@ -26,7 +28,21 @@ export const http = (url: string, opt: httpOptType) => {
       ...headers
     }
   };
-  fetch(url, options);
+  return new Promise((res, rej) => {
+    fetch(url, options)
+      .then(response => {
+        response.json().then(data => {
+          if (data.code === 200) {
+            res(data);
+            return;
+          }
+          rej(data);
+        });
+      })
+      .catch(err => {
+        throw `${url}${options.body}请求出错了`;
+      });
+  });
 };
 
 /**

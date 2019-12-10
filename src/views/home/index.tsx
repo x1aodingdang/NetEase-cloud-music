@@ -1,10 +1,9 @@
 // src/components/Hello.tsx
 
 import * as React from "react";
-import Header from "../../components/Header/index";
-import Slide from "./components/slide";
-import { http } from "../../api/http";
-import { Button } from "antd-mobile";
+import "./index.scss";
+import Header from "../../components/Header/";
+import Slide from "./components/slide/";
 
 export interface Props {
   name: string;
@@ -15,7 +14,9 @@ export default class Home extends React.Component<Props> {
   render() {
     return (
       <div className="home">
+        {/* 头部搜索框 */}
         <Header />
+        {/* 轮播图 */}
         <Slide />
       </div>
     );
