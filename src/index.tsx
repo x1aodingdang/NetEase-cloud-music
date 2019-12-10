@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./assets/js/rem";
 import "./assets/style/reset.scss";
+import "antd-mobile/dist/antd-mobile.css";
 import App from "./router/index";
 import * as serviceWorker from "./serviceWorker";
 
