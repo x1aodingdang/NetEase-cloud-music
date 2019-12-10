@@ -1,0 +1,37 @@
+$headerHeight: 1.08rem;
+$searchHeight: 1.08rem;
+
+.header {
+  background-color: #fff;
+  height: $headerHeight;
+  padding: 0.12rem 0.48rem;
+  font-size: 0.4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .search {
+    width: 9.06rem;
+    height: $searchHeight;
+    text-align: center;
+    font-size: 0.4rem;
+    color: #c6c6c6;
+    background-color: #f7f7f7;
+    border-radius: 0.5rem;
+  }
+
+  .header-icon-maikefeng,
+  .header-icon-audio {
+    height: 100%;
+    width: 1.19rem;
+    color: #000;
+    // 扩大点击区域
+    // padding: 0.2rem;
+    font-size: 0.7rem;
+    text-align: left;
+  }
+
+  .header-icon-audio {
+    text-align: right;
+  }
+}

@@ -5,7 +5,7 @@
   const recalc = function() {
     const { width } = docEl.getBoundingClientRect();
     if (!width) return;
-    docEl.style.fontSize = `${100 * (width / 375)}px`;
+    docEl.style.fontSize = `${100 * (width / 1242)}px`;
   };
   if (!doc.addEventListener) return;
   win.addEventListener(resizeEvt, recalc, false);
