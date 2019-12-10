@@ -1,0 +1,26 @@
+$bannerHeight: 4.47rem;
+
+.home-banner {
+  margin-top: 0.48rem;
+  .slider-list {
+    height: $bannerHeight !important;
+
+    img {
+      height: $bannerHeight;
+    }
+
+    .tag {
+      height: 0.5rem;
+      line-height: 0.5rem;
+      padding: 0 0.2rem;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      font-size: 0.34rem;
+      color: #fff;
+      border-top-left-radius: 0.2rem;
+      border-bottom-right-radius: 0.2rem;
+      // background-color: red;
+    }
+  }
+}
