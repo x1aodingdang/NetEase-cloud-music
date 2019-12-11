@@ -5,6 +5,7 @@ import "./index.scss";
 import Header from "../../components/Header/";
 import Slide from "./components/slide/";
 import HomeCategory from "./components/category/";
+import HomeRecommendPlayList from "./components/playList/";
 
 export interface Props {
   name: string;
@@ -19,7 +20,10 @@ export default class Home extends React.Component<Props> {
         <Header />
         {/* 轮播图 */}
         <Slide />
+        {/* 分类 */}
         <HomeCategory />
+        {/* 推荐歌单 */}
+        <HomeRecommendPlayList />
       </div>
     );
   }

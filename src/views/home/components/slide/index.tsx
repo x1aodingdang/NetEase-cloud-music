@@ -2,9 +2,9 @@
 
 import * as React from "react";
 import "./index.scss";
-import { Carousel, WingBlank, WhiteSpace } from "antd-mobile";
+import { Carousel, WingBlank } from "antd-mobile";
 import { http } from "../../../../api/http";
-import { banner } from "../../../../api/apiList";
+import { $APIbanner } from "../../../../api/apiList";
 
 enum BgColor {
   red = "#e95f4d",
@@ -22,7 +22,7 @@ export default class Slide extends React.Component {
   }
 
   getBanner() {
-    http(banner, { data: { type: 2 } }).then((res: any) => {
+    http($APIbanner, { data: { type: 2 } }).then((res: any) => {
       const { banners } = res;
       this.setState({
         data: banners
@@ -54,6 +54,7 @@ export default class Slide extends React.Component {
                 >
                   <img
                     src={pic}
+                    alt=""
                     style={{
                       width: "100%",
                       verticalAlign: "top"

@@ -1,0 +1,61 @@
+$fontColor: #333;
+
+.home-recommend-playlist {
+  padding: 0 0.48rem;
+
+  .playlist-head {
+    height: 1.83rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 0.48rem;
+
+    .title {
+      font-size: 0.56rem;
+      color: $fontColor;
+    }
+
+    .nav-btn {
+      font-size: 0.38rem;
+      color: $fontColor;
+      height: 0.72rem;
+      line-height: 0.72rem;
+      padding: 0 0.3rem;
+      border-radius: 0.4rem;
+      border: 1px solid #e6e6e6;
+    }
+  }
+
+  .playlist {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    .playlist-item {
+      width: 3.64rem;
+      height: 4.7rem;
+      overflow: hidden;
+      &:nth-of-type(n + 4) {
+        margin-top: 0.3rem;
+      }
+
+      .item-cover {
+        width: 100%;
+        height: 3.64rem;
+
+        img {
+          border-radius: 0.2rem;
+          width: 100%;
+          height: 100%;
+        }
+      }
+
+      .item-name {
+        margin-top: 0.1rem;
+        color: $fontColor;
+        font-size: 0.36rem;
+        line-height: 0.5rem;
+      }
+    }
+  }
+}
