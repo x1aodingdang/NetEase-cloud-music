@@ -72,3 +72,19 @@ a {
   fill: currentColor;
   overflow: hidden;
 }
+
+@import "./var.scss";
+
+#root {
+  display: flex;
+  flex-direction: column;
+
+  .body {
+    flex: 1;
+    overflow: hidden;
+  }
+
+  .footer-tabBar {
+    height: $footerTabBarHeight;
+  }
+}

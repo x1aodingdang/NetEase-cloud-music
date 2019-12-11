@@ -37,6 +37,7 @@ export default class Slide extends React.Component {
           <Carousel
             autoplay={true}
             infinite
+            cellSpacing={10}
             dotActiveStyle={{
               backgroundColor: "#eb4d44"
             }}
