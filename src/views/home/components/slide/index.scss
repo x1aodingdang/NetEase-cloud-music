@@ -1,12 +1,16 @@
 $bannerHeight: 4.47rem;
 
+$borderRadius: 0.2rem;
+
 .home-banner {
   margin-top: 0.48rem;
+
   .slider-list {
     height: $bannerHeight !important;
 
     img {
       height: $bannerHeight;
+      border-radius: $borderRadius;
     }
 
     .tag {
@@ -18,8 +22,8 @@ $bannerHeight: 4.47rem;
       right: 0;
       font-size: 0.34rem;
       color: #fff;
-      border-top-left-radius: 0.2rem;
-      border-bottom-right-radius: 0.2rem;
+      border-top-left-radius: $borderRadius;
+      border-bottom-right-radius: $borderRadius;
       // background-color: red;
     }
   }

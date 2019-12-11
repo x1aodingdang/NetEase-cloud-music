@@ -1,0 +1,34 @@
+.footer-tabBar {
+  background-color: #f0f0f0;
+
+  .tabBar-container {
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+
+    .tabBar-item {
+      height: 100%;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      color: #939393;
+
+      &.active {
+        color: #eb4735;
+      }
+
+      .item-icon {
+        font-size: 0.86rem;
+        line-height: 0.86rem;
+      }
+
+      .item-name {
+        font-size: 0.36rem;
+        line-height: 0.36rem;
+      }
+    }
+  }
+}
