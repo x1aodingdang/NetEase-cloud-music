@@ -1,5 +1,3 @@
-import { async } from "q";
-
 export const API = "http://localhost:9000";
 
 type httpOptType = {
@@ -11,7 +9,7 @@ export const http = (url: string, opt?: httpOptType) => {
   if (typeof window.fetch !== "function") {
     const errorMsg = "浏览器不支持 fetch 请更换最新版chrome浏览器";
     alert(errorMsg);
-    throw errorMsg;
+    throw new Error(errorMsg);
   }
 
   //   body?: string; // 请求的数据  这个是吧 data 转成 string
@@ -31,7 +29,7 @@ export const http = (url: string, opt?: httpOptType) => {
   return new Promise((res, rej) => {
     fetch(url, options)
       .then(response => {
-        response.json().then(data => {
+        response.json().then((data: any) => {
           if (data.code === 200) {
             res(data);
             return;
@@ -40,7 +38,7 @@ export const http = (url: string, opt?: httpOptType) => {
         });
       })
       .catch(err => {
-        throw `${url}${options.body}请求出错了`;
+        throw new Error(`${url}请求出错了`);
       });
   });
 };
