@@ -7,10 +7,7 @@ import Slide from "./components/slide/";
 import HomeCategory from "./components/category/";
 import HomeRecommendPlayList from "./components/playList/";
 
-export interface Props {
-  name: string;
-  enthusiasmLevel?: number;
-}
+export interface Props {}
 
 export default class Home extends React.Component<Props> {
   render() {

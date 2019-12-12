@@ -1,4 +1,13 @@
-const tabBarList = [
+export interface ITabBarList {
+  id: number;
+  label: string;
+  icon: string;
+  path: string;
+}
+
+export type tabBarListType = Array<ITabBarList>;
+
+const tabBarList: tabBarListType = [
   {
     id: 0,
     label: "发现",
@@ -20,7 +29,6 @@ const tabBarList = [
   {
     id: 3,
     label: "云村",
-    // icon: "icon-duorenhuiyi",
     icon: "icon-zy_qunzuduoren",
     path: "/cloud"
   },

@@ -11,6 +11,14 @@ enum BgColor {
   blue = "#5ea3ea"
 }
 
+export type SlideItemType = {
+  pic: string;
+  bannerId: string;
+  url: string;
+  typeTitle: string;
+  titleColor: "red" | "blue";
+};
+
 export default class Slide extends React.Component {
   state = {
     data: []
@@ -42,7 +50,7 @@ export default class Slide extends React.Component {
               backgroundColor: "#eb4d44"
             }}
           >
-            {this.state.data.map((item: any) => {
+            {this.state.data.map((item: SlideItemType) => {
               const { pic, bannerId, url, typeTitle, titleColor } = item;
               return (
                 <a
@@ -64,8 +72,7 @@ export default class Slide extends React.Component {
                   <div
                     className="tag"
                     style={{
-                      backgroundColor:
-                        titleColor === "red" ? BgColor.red : BgColor.blue
+                      backgroundColor: BgColor[titleColor]
                     }}
                   >
                     {typeTitle}

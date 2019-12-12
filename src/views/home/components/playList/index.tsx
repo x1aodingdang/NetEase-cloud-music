@@ -9,7 +9,7 @@ export default class HomeRecommendPlayList extends React.Component {
   state = {
     playlist: []
   };
-  componentWillMount() {
+  componentDidMount() {
     this.getPlayList();
   }
   getPlayList() {
