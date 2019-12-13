@@ -2,13 +2,13 @@ $fontColor: #333;
 
 .home-recommend-playlist {
   padding: 0 0.48rem;
+  height: 11.53rem;
 
   .playlist-head {
     height: 1.83rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 0.48rem;
 
     .title {
       font-size: 0.56rem;
@@ -35,6 +35,7 @@ $fontColor: #333;
       width: 3.64rem;
       height: 4.7rem;
       overflow: hidden;
+
       &:nth-of-type(n + 4) {
         margin-top: 0.3rem;
       }

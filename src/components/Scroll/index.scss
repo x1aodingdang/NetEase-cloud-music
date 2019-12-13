@@ -1,0 +1,8 @@
+.core-container {
+  height: 100%;
+  flex: 1;
+  .scroll-wrapper {
+    height: 100%;
+    overflow: hidden;
+  }
+}

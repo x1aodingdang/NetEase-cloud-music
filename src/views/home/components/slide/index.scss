@@ -3,7 +3,8 @@ $bannerHeight: 4.47rem;
 $borderRadius: 0.2rem;
 
 .home-banner {
-  margin-top: 0.48rem;
+  padding-top: 0.48rem;
+  height: 4.47rem;
 
   .slider-list {
     height: $bannerHeight !important;
