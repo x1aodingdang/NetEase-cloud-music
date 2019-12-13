@@ -27,18 +27,25 @@ export default class Slide extends React.Component {
   componentDidMount() {
     // 请求 banner
     this.getBanner();
+    console.log("slide 请求数据 但是render 了");
   }
 
-  getBanner() {
+  componentDidUpdate() {
+    // console.log(this);
+    console.log("slide DidUpdate 了");
+  }
+
+  getBanner = () => {
     http($APIbanner, { data: { type: 2 } }).then((res: any) => {
       const { banners } = res;
       this.setState({
         data: banners
       });
     });
-  }
+  };
 
   render() {
+    console.log("slide render ");
     return (
       <div className="home-banner">
         <WingBlank>
