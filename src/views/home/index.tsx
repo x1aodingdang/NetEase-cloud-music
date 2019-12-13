@@ -26,12 +26,20 @@ export default class Home extends React.Component<Props> {
     // console.log(this.refSrcollDom.current.refresh());
   }
 
+  pullDownCb = () => {
+    return new Promise<void>(resolve => {
+      setTimeout(() => {
+        resolve();
+      }, 2400);
+    });
+  };
+
   render() {
     return (
       <div className="home">
         {/* 头部搜索框 */}
         <Header />
-        <Srcoll ref={this.refSrcollDom}>
+        <Srcoll ref={this.refSrcollDom} pullDownCb={this.pullDownCb}>
           {/* 轮播图 */}
           <Slide />
           {/* 分类 */}
