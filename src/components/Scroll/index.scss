@@ -1,8 +1,38 @@
 .core-container {
   height: 100%;
   flex: 1;
+
   .scroll-wrapper {
     height: 100%;
     overflow: hidden;
+
+    .pulldown-scroller {
+      position: relative;
+
+      .pulldown-wrapper {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+      }
+
+      .pulldown-before-loading {
+        font-size: 0.9rem;
+
+        &.active-laoding {
+          animation: loading 1s infinite;
+        }
+      }
+    }
+  }
+}
+
+@keyframes loading {
+  0% {
+  }
+
+  100% {
+    transform: rotateZ(360deg);
   }
 }
