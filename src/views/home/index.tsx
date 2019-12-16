@@ -8,14 +8,23 @@ import HomeCategory from "./components/category/";
 import HomeRecommendPlayList from "./components/playList/";
 import Srcoll from "../../components/Scroll";
 
-export interface Props {}
+import { connect } from "react-redux";
+import { Dispatch } from "redux";
+import { decrement, increment } from "../../store/actions";
+import { StoreState } from "../../store/index";
+import { StateContent } from "../../store/reducers/home";
+
+export interface IProps {
+  bannerList: StateContent[];
+}
 
 // 这里为什么不能滚动 因为  可能有如下原因
 // 1. scroll 里边的盒子 没有高度
 // 2.  需要重新  bs.refresh
-export default class Home extends React.Component<Props> {
+// @connect()
+class Home extends React.Component<IProps> {
   refSrcollDom: any;
-  constructor(props: Props) {
+  constructor(props: IProps) {
     super(props);
     this.refSrcollDom = React.createRef();
   }
@@ -35,6 +44,7 @@ export default class Home extends React.Component<Props> {
   };
 
   render() {
+    console.log(this.props.bannerList);
     return (
       <div className="home">
         {/* 头部搜索框 */}
@@ -52,3 +62,9 @@ export default class Home extends React.Component<Props> {
     );
   }
 }
+
+export default connect((s: StoreState) => {
+  return {
+    bannerList: s.home.bannerList
+  };
+})(Home);
