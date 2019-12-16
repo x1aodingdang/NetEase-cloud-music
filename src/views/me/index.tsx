@@ -1,7 +1,29 @@
 import * as React from "react";
-import Srcoll from "../../components/Scroll";
+import { connect } from "react-redux";
+import { Dispatch } from "redux";
+import { decrement, increment } from "../../store/actions";
+import { StoreState } from "../../store/index";
 
-export default class Me extends React.Component {
+// 创建类型接口
+export interface IProps {
+  value: number;
+  onIncrement: () => void;
+  onDecrement: () => void;
+}
+
+const mapStateToProps = (state: StoreState): { value: number } => {
+  return {
+    // value: state
+    value: state.test.value
+  };
+};
+
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  onDecrement: () => dispatch(decrement()),
+  onIncrement: () => dispatch(increment())
+});
+
+class Me extends React.Component<IProps> {
   render() {
     return (
       <div
@@ -10,45 +32,12 @@ export default class Me extends React.Component {
           backgroundColor: "yellow"
         }}
       >
-        <Srcoll>
-          <li
-            style={{
-              height: "100px"
-            }}
-          >
-            <p>1Î</p>
-            <p>1Î</p>
-            <p>1Î</p>
-            <p>1Î</p>
-            <p>1Î</p>
-          </li>
-
-          <li
-            style={{
-              height: "500px"
-            }}
-          >
-            <p>2</p>
-            <p>2</p>
-            <p>2</p>
-            <p>2</p>
-            <p>2</p>
-            <p>2</p>
-          </li>
-          <li
-            style={{
-              height: "500px"
-            }}
-          >
-            <p>2</p>
-            <p>2</p>
-            <p>2</p>
-            <p>2</p>
-            <p>2</p>
-            <p>2</p>
-          </li>
-        </Srcoll>
+        <div onClick={this.props.onIncrement}>+ 点我咯</div>
+        <p>我是value{this.props.value}</p>
+        <div onClick={this.props.onDecrement}>- 点我咯</div>
       </div>
     );
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Me);
