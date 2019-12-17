@@ -4,8 +4,6 @@ import { $APIbanner } from "../../api/apiList";
 import { bannerListContent } from "../reducers/home";
 import { Dispatch } from "redux";
 
-// import {} from '../reducers/home'
-
 export interface ISETBANNERLIST {
   type: typeof SETBANNERLIST;
   bannerList: bannerListContent[];

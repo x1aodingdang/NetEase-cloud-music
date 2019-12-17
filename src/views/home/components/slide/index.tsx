@@ -12,14 +12,6 @@ enum BgColor {
   blue = "#5ea3ea"
 }
 
-export type SlideItemType = {
-  pic: string;
-  bannerId: string;
-  url: string;
-  typeTitle: string;
-  titleColor: "red" | "blue";
-};
-
 export interface IProps {
   bannerList: bannerListContent[];
 }
@@ -37,7 +29,7 @@ class Slide extends React.Component<IProps> {
               backgroundColor: "#eb4d44"
             }}
           >
-            {this.props.bannerList.map((item: SlideItemType) => {
+            {this.props.bannerList.map((item: bannerListContent) => {
               const { pic, bannerId, url, typeTitle, titleColor } = item;
               return (
                 <a

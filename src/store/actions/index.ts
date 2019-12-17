@@ -1,7 +1,6 @@
 import {
   INCREMENT_VALUE,
   INCREMENT_VALUE_TYPE,
-  DECREMENT_VALUE,
   DECREMENT_VALUE_TYPE
 } from "../constants/index";
 import { Dispatch } from "redux";
