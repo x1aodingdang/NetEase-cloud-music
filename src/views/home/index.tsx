@@ -12,10 +12,12 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { decrement, increment } from "../../store/actions";
 import { StoreState } from "../../store/index";
-import { StateContent } from "../../store/reducers/home";
+import { bannerListContent } from "../../store/reducers/home";
+import { getBannerList } from "../../store/actions/home";
 
 export interface IProps {
-  bannerList: StateContent[];
+  bannerList: bannerListContent[];
+  getBannerList: () => void;
 }
 
 // 这里为什么不能滚动 因为  可能有如下原因
@@ -29,42 +31,47 @@ class Home extends React.Component<IProps> {
     this.refSrcollDom = React.createRef();
   }
 
-  componentDidUpdate() {
-    console.log("home --- componentDidUpdate");
-    // 重新 re
-    // console.log(this.refSrcollDom.current.refresh());
+  componentDidMount() {
+    this.initData();
   }
 
-  pullDownCb = () => {
-    return new Promise<void>(resolve => {
-      setTimeout(() => {
-        resolve();
-      }, 2400);
+  // 初始化数据  获取轮播  歌单列表 ...
+  initData = () => {
+    // return
+    return new Promise<void>(async resolve => {
+      await this.props.getBannerList();
+      resolve();
     });
   };
 
   render() {
-    console.log(this.props.bannerList);
     return (
       <div className="home">
         {/* 头部搜索框 */}
         <Header />
-        <Srcoll ref={this.refSrcollDom} pullDownCb={this.pullDownCb}>
-          {/* 轮播图 */}
-          <Slide />
-          {/* 分类 */}
-          <HomeCategory />
-          {/* 推荐歌单 */}
-          <HomeRecommendPlayList />
-          <HomeRecommendPlayList />
-        </Srcoll>
+        <div className="home-srcoll">
+          <Srcoll ref={this.refSrcollDom} pullDownCb={this.initData}>
+            {/* 轮播图 */}
+            <Slide />
+            {/* 分类 */}
+            <HomeCategory />
+            {/* 推荐歌单 */}
+            <HomeRecommendPlayList />
+            <HomeRecommendPlayList />
+          </Srcoll>
+        </div>
       </div>
     );
   }
 }
 
-export default connect((s: StoreState) => {
-  return {
-    bannerList: s.home.bannerList
-  };
-})(Home);
+export default connect(
+  (s: StoreState) => {
+    return {
+      bannerList: s.home.bannerList
+    };
+  },
+  (dispatch: Dispatch) => ({
+    getBannerList: () => dispatch(getBannerList())
+  })
+)(Home);

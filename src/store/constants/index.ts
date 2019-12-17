@@ -8,5 +8,5 @@ export const DECREMENT_VALUE = "DECREMENT_VALUE";
 export type DECREMENT_VALUE_TYPE = typeof DECREMENT_VALUE;
 
 // home
-export const BANNERLIST = "BANNERLIST";
-export type BANNERLIST_TYPE = typeof BANNERLIST;
+export const SETBANNERLIST = "SETBANNERLIST";
+export type SETBANNERLIST_TYPE = typeof SETBANNERLIST;

@@ -5,6 +5,11 @@ import "./index.scss";
 import { Carousel, WingBlank } from "antd-mobile";
 import { http } from "../../../../api/http";
 import { $APIbanner } from "../../../../api/apiList";
+import { connect } from "react-redux";
+import { StoreState } from "../../../../store";
+import { bannerListContent } from "../../../../store/reducers/home";
+import { Dispatch } from "redux";
+import { getBannerList } from "../../../../store/actions/home";
 
 enum BgColor {
   red = "#e95f4d",
@@ -19,33 +24,27 @@ export type SlideItemType = {
   titleColor: "red" | "blue";
 };
 
-export default class Slide extends React.Component {
+export interface IProps {
+  bannerList: bannerListContent[];
+  // getBannerList: () => void;
+}
+
+class Slide extends React.Component<IProps> {
+  // [x: string]: any;
   state = {
     data: []
   };
 
   componentDidMount() {
     // 请求 banner
-    this.getBanner();
-    console.log("slide 请求数据 但是render 了");
+    // this.props.getBannerList();
   }
 
   componentDidUpdate() {
-    // console.log(this);
-    console.log("slide DidUpdate 了");
+    //
   }
 
-  getBanner = () => {
-    http($APIbanner, { data: { type: 2 } }).then((res: any) => {
-      const { banners } = res;
-      this.setState({
-        data: banners
-      });
-    });
-  };
-
   render() {
-    console.log("slide render ");
     return (
       <div className="home-banner">
         <WingBlank>
@@ -57,7 +56,7 @@ export default class Slide extends React.Component {
               backgroundColor: "#eb4d44"
             }}
           >
-            {this.state.data.map((item: SlideItemType) => {
+            {this.props.bannerList.map((item: SlideItemType) => {
               const { pic, bannerId, url, typeTitle, titleColor } = item;
               return (
                 <a
@@ -93,3 +92,12 @@ export default class Slide extends React.Component {
     );
   }
 }
+
+export default connect(
+  (s: StoreState) => ({
+    bannerList: s.home.bannerList
+  }),
+  (dispatch: Dispatch) => ({
+    // getBannerList: async () => dispatch(await getBannerList())
+  })
+)(Slide);

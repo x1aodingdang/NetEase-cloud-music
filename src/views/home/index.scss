@@ -1,6 +1,12 @@
+@import "../../assets/style/var.scss";
+
 .home {
   display: flex;
   flex-direction: column;
   height: 100%;
   background-color: #fff;
+
+  .home-srcoll {
+    height: calc(100% - #{$homeHeaderHeight + $homeHeaderPadding * 2});
+  }
 }
