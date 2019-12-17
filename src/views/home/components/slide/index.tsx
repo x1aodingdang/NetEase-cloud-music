@@ -3,13 +3,9 @@
 import * as React from "react";
 import "./index.scss";
 import { Carousel, WingBlank } from "antd-mobile";
-import { http } from "../../../../api/http";
-import { $APIbanner } from "../../../../api/apiList";
 import { connect } from "react-redux";
 import { StoreState } from "../../../../store";
 import { bannerListContent } from "../../../../store/reducers/home";
-import { Dispatch } from "redux";
-import { getBannerList } from "../../../../store/actions/home";
 
 enum BgColor {
   red = "#e95f4d",
@@ -26,24 +22,9 @@ export type SlideItemType = {
 
 export interface IProps {
   bannerList: bannerListContent[];
-  // getBannerList: () => void;
 }
 
 class Slide extends React.Component<IProps> {
-  // [x: string]: any;
-  state = {
-    data: []
-  };
-
-  componentDidMount() {
-    // 请求 banner
-    // this.props.getBannerList();
-  }
-
-  componentDidUpdate() {
-    //
-  }
-
   render() {
     return (
       <div className="home-banner">
@@ -93,11 +74,6 @@ class Slide extends React.Component<IProps> {
   }
 }
 
-export default connect(
-  (s: StoreState) => ({
-    bannerList: s.home.bannerList
-  }),
-  (dispatch: Dispatch) => ({
-    // getBannerList: async () => dispatch(await getBannerList())
-  })
-)(Slide);
+export default connect((s: StoreState) => ({
+  bannerList: s.home.bannerList
+}))(Slide);
