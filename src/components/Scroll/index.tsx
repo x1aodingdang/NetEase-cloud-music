@@ -3,7 +3,6 @@ import BScroll from "@better-scroll/core";
 import PullDown from "@better-scroll/pull-down";
 import "./index.scss";
 import Icon from "../Icon";
-import PropTypes from "prop-types";
 
 BScroll.use(PullDown);
 

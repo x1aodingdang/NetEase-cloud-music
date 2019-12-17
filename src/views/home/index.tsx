@@ -10,7 +10,6 @@ import Srcoll from "../../components/Scroll";
 
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { decrement, increment } from "../../store/actions";
 import { StoreState } from "../../store/index";
 import { bannerListContent } from "../../store/reducers/home";
 import { getBannerList } from "../../store/actions/home";
@@ -40,6 +39,13 @@ class Home extends React.Component<IProps> {
     // return
     return new Promise<void>(async resolve => {
       await this.props.getBannerList();
+      // 为什么有个计时器的操作 ？
+      // 因为本地 请求太快啦 看不到loading 效果 所有 就有了这个setTimeout
+      await new Promise(res => {
+        setTimeout(() => {
+          res();
+        }, 300);
+      });
       resolve();
     });
   };
