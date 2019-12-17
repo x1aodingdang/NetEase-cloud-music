@@ -38,6 +38,7 @@ export const http = (url: string, opt?: httpOptType) => {
         });
       })
       .catch(err => {
+        // alert(`${url}请求出错了`);
         throw new Error(`${url}请求出错了`);
       });
   });

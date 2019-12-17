@@ -1,9 +1,29 @@
-import { BANNERLIST, BANNERLIST_TYPE } from "../constants";
+import { SETBANNERLIST } from "../constants";
+import { http } from "../../api/http";
+import { $APIbanner } from "../../api/apiList";
+import { bannerListContent } from "../reducers/home";
+import { Dispatch } from "redux";
 
-export interface BANNERLISTAction {
-  type: BANNERLIST_TYPE;
+// import {} from '../reducers/home'
+
+export interface ISETBANNERLIST {
+  type: typeof SETBANNERLIST;
+  bannerList: bannerListContent[];
 }
 
-export const bannerList = (): BANNERLISTAction => {
-  return { type: BANNERLIST };
+export type IHomeAction = ISETBANNERLIST;
+
+export const setBannerList = (
+  bannerList: bannerListContent[]
+): ISETBANNERLIST => {
+  return { type: SETBANNERLIST, bannerList };
+};
+
+export const getBannerList: () => any = () => {
+  return (dispatch: Dispatch): Promise<void> => {
+    return http($APIbanner, { data: { type: 2 } }).then((res: any) => {
+      // const banners: bannerListContent[] = res.banners;
+      dispatch(setBannerList(res.banners));
+    });
+  };
 };

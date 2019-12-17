@@ -1,9 +1,11 @@
-import { BANNERLIST } from "../constants/index";
+import { SETBANNERLIST } from "../constants/index";
+import { ISETBANNERLIST } from "../actions/home";
+import { IHomeAction } from "../actions/home";
 
 export interface State {
-  bannerList: StateContent[];
+  bannerList: bannerListContent[];
 }
-export interface StateContent {
+export interface bannerListContent {
   pic: string;
   bannerId: string;
   url: string;
@@ -11,20 +13,30 @@ export interface StateContent {
   titleColor: "red" | "blue";
 }
 
-export const initialState = {
+export const initialState: State = {
   bannerList: []
 };
 
 const actions = {
-  [BANNERLIST]: (state: State) => {
-    return state.bannerList;
+  [SETBANNERLIST]: (state: State, action: ISETBANNERLIST) => {
+    return {
+      ...state,
+      bannerList: action.bannerList
+    };
   }
 };
 
-export const reducer = (
-  state: State = initialState
-  // action: ModifyAction1
-) => {
-  console.log("?");
+export const reducer = (state: State = initialState, action: IHomeAction) => {
+  // switch (action.type) {
+  //   // case BANNERLIST:
+  //   //   return actions[action.type](state);
+  //   case SETBANNERLIST:
+  //     return actions[action.type](state, action);
+  //   default:
+  //     return { ...state };
+  // }
+  if (typeof actions[action.type] === "function") {
+    return actions[action.type](state, action);
+  }
   return { ...state };
 };
