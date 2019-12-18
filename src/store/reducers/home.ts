@@ -1,5 +1,5 @@
 import { SETBANNERLIST, SETPLAYLIST } from "../constants/index";
-import { ISETBANNERLIST, IPlayList } from "../actions/home";
+import { ISetBannerList, IPlayList } from "../actions/home";
 import { IHomeAction } from "../actions/home";
 
 export interface State {
@@ -40,7 +40,7 @@ export const initialState: State = {
 };
 
 const actions = {
-  [SETBANNERLIST]: (state: State, action: ISETBANNERLIST) => {
+  [SETBANNERLIST]: (state: State, action: ISetBannerList) => {
     return {
       ...state,
       bannerList: action.bannerList
@@ -61,11 +61,14 @@ export const reducer = (state: State = initialState, action: IHomeAction) => {
     case SETPLAYLIST:
       return actions[action.type](state, action);
     default:
-      return { ...state };
+      return {
+        ...state
+      };
   }
   // 看能不能 优化成下面 一样  
   // if (typeof actions[action.type] === "function") {
-  //   return actions[action.type](state, action); // 类型“IHomeAction”的参数不能赋给类型“ISETBANNERLIST & IPlayList”的参数
+  // 为什么会有这个判断   一开始 这个函数会 执行一遍   type: "@@redux/INIT5.s.9.p.p.8" 会出现这个值  所以过滤一下  （具体原因等待查证）
+  //   return actions[action.type](state, action); // 类型“IHomeAction”的参数不能赋给类型“ISetBannerList & IPlayList”的参数
   // }
   // return { ...state };
 };
