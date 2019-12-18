@@ -5,10 +5,10 @@ import NoOpen from "../../components/NoOpen";
 // 创建类型接口
 export interface IProps {}
 
-class Me extends React.Component<IProps> {
+class Account extends React.Component<IProps> {
   render() {
     return <NoOpen></NoOpen>;
   }
 }
 
-export default connect()(Me);
+export default connect()(Account);
