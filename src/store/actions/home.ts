@@ -4,7 +4,7 @@ import { $APIbanner, $APIHomeRecommendPlayList } from "../../api/apiList";
 import { IBannerListContent, IPlayListContent } from "../reducers/home";
 import { Dispatch } from "redux";
 
-export interface ISETBANNERLIST {
+export interface ISetBannerList {
   type: typeof SETBANNERLIST;
   bannerList: IBannerListContent[];
 }
@@ -14,11 +14,11 @@ export interface IPlayList {
   playList: IPlayListContent[];
 }
 
-export type IHomeAction = ISETBANNERLIST | IPlayList;
+export type IHomeAction = ISetBannerList | IPlayList;
 
 export const setBannerList = (
   bannerList: IBannerListContent[]
-): ISETBANNERLIST => {
+): ISetBannerList => {
   return { type: SETBANNERLIST, bannerList };
 };
 
@@ -32,7 +32,6 @@ export const setPlayList = (playList: IPlayListContent[]) => {
 export const getBannerList: () => any = () => {
   return (dispatch: Dispatch): Promise<void> => {
     return http($APIbanner, { data: { type: 2 } }).then((res: any) => {
-      // const banners: IBannerListContent[] = res.banners;
       dispatch(setBannerList(res.banners));
     });
   };
