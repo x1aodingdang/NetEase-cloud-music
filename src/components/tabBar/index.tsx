@@ -23,12 +23,13 @@ class FooterTabBar extends React.Component<Props> {
   };
 
   render() {
+    const { pathname } = this.props.location;
     const items = tabBarList.map(v => {
       const { icon, id, label, path } = v;
       return (
         <li
           key={id}
-          className={`tabBar-item ${id === 0 && "active"}`}
+          className={`tabBar-item  ${pathname.includes(path) && "active"}`}
           onClick={() => {
             this.jump(path);
           }}
