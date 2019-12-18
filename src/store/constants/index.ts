@@ -8,5 +8,13 @@ export const DECREMENT_VALUE = "DECREMENT_VALUE";
 export type DECREMENT_VALUE_TYPE = typeof DECREMENT_VALUE;
 
 // home
+
+/**
+ * 设置轮播
+ */
 export const SETBANNERLIST = "SETBANNERLIST";
-export type SETBANNERLIST_TYPE = typeof SETBANNERLIST;
+
+/**
+ * 设置歌单列表  首页推荐歌单
+ */
+export const SETPLAYLIST = "SETPLAYLIST";

@@ -11,12 +11,13 @@ import Srcoll from "../../components/Scroll";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { StoreState } from "../../store/index";
-import { bannerListContent } from "../../store/reducers/home";
-import { getBannerList } from "../../store/actions/home";
+import { IBannerListContent } from "../../store/reducers/home";
+import { getBannerList, getPlayList } from "../../store/actions/home";
 
 export interface IProps {
-  bannerList: bannerListContent[];
+  bannerList: IBannerListContent[];
   getBannerList: () => void;
+  getPlayList: () => void;
 }
 
 // 这里为什么不能滚动 因为  可能有如下原因
@@ -38,7 +39,9 @@ class Home extends React.Component<IProps> {
   initData = () => {
     // return
     return new Promise<void>(async resolve => {
+      // 这里可以更好的方式 是 使用 Promise.all
       await this.props.getBannerList();
+      await this.props.getPlayList();
       // 为什么有个计时器的操作 ？
       // 因为本地 请求太快啦 看不到loading 效果 所有 就有了这个setTimeout
       await new Promise(res => {
@@ -78,6 +81,7 @@ export default connect(
     };
   },
   (dispatch: Dispatch) => ({
-    getBannerList: () => dispatch(getBannerList())
+    getBannerList: () => dispatch(getBannerList()),
+    getPlayList: () => dispatch(getPlayList())
   })
 )(Home);
