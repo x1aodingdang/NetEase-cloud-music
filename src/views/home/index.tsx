@@ -57,7 +57,7 @@ class Home extends React.Component<IProps> {
     return (
       <div className="home">
         {/* 头部搜索框 */}
-        <Header />
+        <Header type={"home"} />
         <div className="home-srcoll">
           <Srcoll ref={this.refSrcollDom} pullDownCb={this.initData}>
             {/* 轮播图 */}
