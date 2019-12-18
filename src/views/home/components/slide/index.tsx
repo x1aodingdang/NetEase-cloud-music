@@ -5,7 +5,7 @@ import "./index.scss";
 import { Carousel, WingBlank } from "antd-mobile";
 import { connect } from "react-redux";
 import { StoreState } from "../../../../store";
-import { bannerListContent } from "../../../../store/reducers/home";
+import { IBannerListContent } from "../../../../store/reducers/home";
 
 enum BgColor {
   red = "#e95f4d",
@@ -13,7 +13,7 @@ enum BgColor {
 }
 
 export interface IProps {
-  bannerList: bannerListContent[];
+  bannerList: IBannerListContent[];
 }
 
 class Slide extends React.Component<IProps> {
@@ -29,7 +29,7 @@ class Slide extends React.Component<IProps> {
               backgroundColor: "#eb4d44"
             }}
           >
-            {this.props.bannerList.map((item: bannerListContent) => {
+            {this.props.bannerList.map((item: IBannerListContent) => {
               const { pic, bannerId, url, typeTitle, titleColor } = item;
               return (
                 <a

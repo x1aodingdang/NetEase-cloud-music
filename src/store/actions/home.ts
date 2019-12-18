@@ -1,27 +1,49 @@
-import { SETBANNERLIST } from "../constants";
+import { SETBANNERLIST, SETPLAYLIST } from "../constants";
 import { http } from "../../api/http";
-import { $APIbanner } from "../../api/apiList";
-import { bannerListContent } from "../reducers/home";
+import { $APIbanner, $APIHomeRecommendPlayList } from "../../api/apiList";
+import { IBannerListContent, IPlayListContent } from "../reducers/home";
 import { Dispatch } from "redux";
 
 export interface ISETBANNERLIST {
   type: typeof SETBANNERLIST;
-  bannerList: bannerListContent[];
+  bannerList: IBannerListContent[];
 }
 
-export type IHomeAction = ISETBANNERLIST;
+export interface IPlayList {
+  type: typeof SETPLAYLIST;
+  playList: IPlayListContent[];
+}
+
+export type IHomeAction = ISETBANNERLIST | IPlayList;
 
 export const setBannerList = (
-  bannerList: bannerListContent[]
+  bannerList: IBannerListContent[]
 ): ISETBANNERLIST => {
   return { type: SETBANNERLIST, bannerList };
+};
+
+export const setPlayList = (playList: IPlayListContent[]) => {
+  return {
+    type: SETPLAYLIST,
+    playList
+  };
 };
 
 export const getBannerList: () => any = () => {
   return (dispatch: Dispatch): Promise<void> => {
     return http($APIbanner, { data: { type: 2 } }).then((res: any) => {
-      // const banners: bannerListContent[] = res.banners;
+      // const banners: IBannerListContent[] = res.banners;
       dispatch(setBannerList(res.banners));
     });
+  };
+};
+
+export const getPlayList: () => any = () => {
+  return (dispatch: Dispatch): Promise<void> => {
+    return http($APIHomeRecommendPlayList, { data: { limit: 6 } }).then(
+      (res: any) => {
+        dispatch(setPlayList(res.result));
+      }
+    );
   };
 };

@@ -3,16 +3,11 @@ import "./index.scss";
 import list from "./list";
 
 export default class HomeCategory extends React.Component {
-  componentDidUpdate() {
-    console.log("category update");
+  constructor(props: any) {
+    super(props);
+    this.state = {};
   }
-
-  componentDidMount() {
-    console.log("category componentDidMount");
-  }
-
   render() {
-    console.log("category render ");
     const items = list.map(v => {
       const { img, id, label } = v;
       return (
