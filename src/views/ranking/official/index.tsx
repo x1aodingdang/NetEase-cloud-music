@@ -4,8 +4,17 @@ import officialList from "./list";
 import { connect } from "react-redux";
 import { StoreState } from "../../../store";
 import { IRankOfficialList } from "../../../store/reducers/ranking";
+import { withRouter, RouteComponentProps } from "react-router-dom";
 
-export interface Props {
+const idMap: { [index: string]: number } = {
+  // 排行榜摘要的id    获取排行榜详情的id
+  "3778678": 1, //"云音乐热歌榜"
+  "19723756": 3, // 云音乐飙升榜
+  "3779629": 0, // 云音乐新歌榜
+  "2884035": 2 // 网易原创歌曲榜
+};
+
+export interface Props extends RouteComponentProps {
   rankOfficialList: IRankOfficialList;
 }
 export interface State {}
@@ -18,13 +27,24 @@ class Official extends React.Component<Props, State> {
     super(props);
     this.state = {};
   }
+
+  goToDetail = (id: number) => {
+    this.props.history.push(`/ranking/detail/${idMap[id]}`);
+  };
+
   render() {
     // console.log(this.props.rankOfficialList);
     const items = this.props.rankOfficialList.map(
       ({ id, updateFrequency, coverImgUrl, name, tracks }) => {
         console.log(id, name);
         return (
-          <li className="offcial-item" key={id}>
+          <li
+            className="offcial-item"
+            key={id}
+            onClick={() => {
+              this.goToDetail(id);
+            }}
+          >
             <div className="item-icon">
               <img src={coverImgUrl} alt={name} />
               <span className="item-icon-sub-tit">{updateFrequency}</span>
@@ -68,6 +88,8 @@ class Official extends React.Component<Props, State> {
   }
 }
 
-export default connect((state: StoreState) => ({
-  rankOfficialList: state.rankList.rankOfficialList
-}))(Official);
+export default withRouter(
+  connect((state: StoreState) => ({
+    rankOfficialList: state.rankList.rankOfficialList
+  }))(Official)
+);
