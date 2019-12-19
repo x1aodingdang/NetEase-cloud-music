@@ -39,7 +39,7 @@ export default [
   {
     path: "/ranking",
     component: Ranking,
-    tabBar: false // 展示 底部 菜单
+    tabBar: true // 展示 底部 菜单
   },
   // {
   //   path: "/tacos",

@@ -34,20 +34,18 @@
         }
       }
 
-      .item-top-lsit {
+      .item-top-list {
+        flex: 1;
+        overflow: hidden;
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        justify-content: space-evenly;
         margin-left: 0.46rem;
-        font-size: 0.42rem;
-        background-color: #ff0;
 
-        .top-lsit-item {
+        .top-list-item {
           color: #666;
-
-          &:nth-of-type(n + 2) {
-            margin-top: 0.42rem;
-          }
+          // line-height: 0.42rem;
+          font-size: 0.42rem;
         }
       }
 

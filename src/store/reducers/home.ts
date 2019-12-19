@@ -2,7 +2,7 @@ import { SETBANNERLIST, SETPLAYLIST } from "../constants/index";
 import { ISetBannerList, IPlayList } from "../actions/home";
 import { IHomeAction } from "../actions/home";
 
-export interface State {
+export interface IState {
   bannerList: IBannerListContent[];
   playList: IPlayListContent[];
 }
@@ -34,19 +34,19 @@ export interface IPlayListContent {
   alg: string;
 }
 
-export const initialState: State = {
+export const initialState: IState = {
   bannerList: [],
   playList: []
 };
 
 const actions = {
-  [SETBANNERLIST]: (state: State, action: ISetBannerList) => {
+  [SETBANNERLIST]: (state: IState, action: ISetBannerList) => {
     return {
       ...state,
       bannerList: action.bannerList
     };
   },
-  [SETPLAYLIST]: (state: State, action: IPlayList) => {
+  [SETPLAYLIST]: (state: IState, action: IPlayList) => {
     return {
       ...state,
       playList: action.playList
@@ -54,7 +54,7 @@ const actions = {
   }
 };
 
-export const reducer = (state: State = initialState, action: IHomeAction) => {
+export const reducer = (state: IState = initialState, action: IHomeAction) => {
   switch (action.type) {
     case SETBANNERLIST:
       return actions[action.type](state, action);
