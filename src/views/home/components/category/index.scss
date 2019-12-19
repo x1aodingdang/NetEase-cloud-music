@@ -1,6 +1,8 @@
+@import "../../../../assets/style/var.scss";
+
 .home-category {
   height: 3.38rem;
-  padding: 0 0.48rem;
+  padding: 0 $bothPadding;
   border-bottom: 1px solid #e6e6e6;
 
   .category-box {
