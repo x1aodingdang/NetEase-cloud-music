@@ -1,7 +1,9 @@
+@import "../../../../assets/style/var.scss";
+
 $fontColor: #333;
 
 .home-recommend-playlist {
-  padding: 0 0.48rem;
+  padding: $bothPadding;
   height: 11.53rem;
 
   .playlist-head {
