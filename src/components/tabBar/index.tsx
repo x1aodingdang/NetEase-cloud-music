@@ -51,6 +51,8 @@ class FooterTabBar extends React.Component<Props> {
 
 //withRouter
 // 为什么使用 withRouter 装饰器
-// - 获取 路由 history 对象 (注意  这种方式 该组件必须有 router 组件包裹)
+// - 获取 路由 history 对象
+// 如果 这个组件不被 Route 组件所```直接包裹```(子组件而不是子子组件) 就要是使用 这个装饰来 获取 路由下的属性
+// 并且 props 需要 继承 RouteComponentProps
 
 export default withRouter(FooterTabBar);

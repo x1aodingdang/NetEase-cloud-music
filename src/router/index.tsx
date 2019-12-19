@@ -27,13 +27,13 @@ function RouteWithSubRoutes(route: any) {
       <div className="body">
         <Route
           path={route.path}
-          render={props =>
-            route.redirect ? (
+          render={props => {
+            return route.redirect ? (
               <Redirect exact to={{ pathname: route.redirect }}></Redirect>
             ) : (
               <route.component {...props} routes={route.routes} />
-            )
-          }
+            );
+          }}
         />
       </div>
       {route.tabBar && <FooterTabBar />}

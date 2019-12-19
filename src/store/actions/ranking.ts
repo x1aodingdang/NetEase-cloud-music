@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
-import { http } from "../../api/http";
-import { $APIRankList } from "../../api/apiList";
+import { http, IHttpOpt } from "../../api/http";
+import { $APIRankList, $APIRankDetail } from "../../api/apiList";
 import { SETRANKOFFCIALLIST } from "../constants";
 import { IRankOfficialList } from "../reducers/ranking";
 
@@ -10,6 +10,15 @@ export interface ISETRANKOFFCIALLIST {
 }
 
 export const setRankOfficialList = (
+  rankOfficialList: IRankOfficialList
+): ISETRANKOFFCIALLIST => {
+  return {
+    type: SETRANKOFFCIALLIST,
+    rankOfficialList
+  };
+};
+
+export const setRankDetail = (
   rankOfficialList: IRankOfficialList
 ): ISETRANKOFFCIALLIST => {
   return {
@@ -30,10 +39,13 @@ export const getRankOfficialList = (): any => {
     });
   };
 };
-// export const getRankOfficialList = (opt: IHttpOpt): any => {
-//   return (dispatch: Dispatch) => {
-//     return http($APIRankDetail, opt).then(res => {
-//       // dispatch(setRankOfficialList(res));
-//     });
-//   };
-// };
+
+export const getRankDetail = (opt: IHttpOpt): any => {
+  return (dispatch: Dispatch) => {
+    return http($APIRankDetail, opt);
+    // .then((res: any) => {
+    //   console.log(res);
+    //   // dispatch(setRankOfficialList(res));
+    // });
+  };
+};
