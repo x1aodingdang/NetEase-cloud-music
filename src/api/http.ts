@@ -1,11 +1,11 @@
 export const API = "http://localhost:9000";
 
-type httpOptType = {
+export interface IHttpOpt {
   method?: "get" | "post"; // 暂时两种方法
   data?: {}; // 请求的数据  json 格式
   headers?: {}; // 请求头
-};
-export const http = (url: string, opt?: httpOptType) => {
+}
+export const http = (url: string, opt?: IHttpOpt) => {
   if (typeof window.fetch !== "function") {
     const errorMsg = "浏览器不支持 fetch 请更换最新版chrome浏览器";
     alert(errorMsg);
