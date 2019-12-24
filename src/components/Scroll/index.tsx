@@ -6,8 +6,13 @@ import Icon from "../Icon";
 
 BScroll.use(PullDown);
 
+let isPullDowning = false; // 同步的 是否在下拉加载中
+
 export interface iProps {
   pullDownCb?: () => Promise<void>;
+  bounce?:
+    | boolean
+    | { left?: boolean; right?: boolean; top?: boolean; bottom?: boolean };
 }
 export interface iState {
   bs: BScroll | null;
@@ -48,6 +53,15 @@ export default class Srcoll extends React.Component<iProps, iState> {
   init = () => {
     const { isPullDown } = this.state;
 
+    const bounce =
+      this.props.bounce === false
+        ? {
+            top: false,
+            bottom: false,
+            left: false,
+            right: false
+          }
+        : this.props.bounce || true;
     const bs = new BScroll(this.scrollDom.current, {
       scrollY: true,
       click: true,
@@ -57,7 +71,9 @@ export default class Srcoll extends React.Component<iProps, iState> {
       pullDownRefresh: isPullDown && {
         threshold: THRESHOLD, // 配置顶部下拉的距离来决定刷新时机
         stop: STOP // 回弹停留的距离
-      }
+      },
+
+      bounce: bounce // 回弹
     });
 
     isPullDown && bs.on("pullingDown", this.pullingDownHandler);
@@ -70,7 +86,7 @@ export default class Srcoll extends React.Component<iProps, iState> {
   pullingDownHandler = async () => {
     const { isPullDown } = this.state;
     if (!isPullDown || typeof this.props.pullDownCb !== "function") return;
-
+    isPullDowning = true;
     this.setState({
       beforePullDown: false,
       isPullingDown: true
@@ -91,6 +107,7 @@ export default class Srcoll extends React.Component<iProps, iState> {
     const { bs } = this.state;
     await new Promise(resolve => {
       setTimeout(() => {
+        isPullDowning = false;
         bs && bs.finishPullDown();
         // (bs as BScroll).finishPullDown();
         resolve();
@@ -107,6 +124,21 @@ export default class Srcoll extends React.Component<iProps, iState> {
   refresh = () => {
     this.state && this.state.bs && this.state.bs.refresh();
   };
+
+  // getSnapshotBeforeUpdate(prevProps: iProps, prevState: iState) {
+  //   if (prevState.hasNewMsg) {
+  //     const scroll = this.ScrollMessage;
+  //     const content = this.ScrollMessageUl;
+  //     return content.offsetHeight <= scroll.scrollTop + scroll.offsetHeight;
+  //   }
+  //   return false;
+  // }
+
+  componentDidUpdate(prevProps: iProps, prevState: iState) {
+    if (!isPullDowning) {
+      this.refresh();
+    }
+  }
 
   renderBeforeLoading(isLoading: boolean) {
     return (

@@ -9,9 +9,12 @@ enum iconClassName {
   back = "icon-back"
 }
 
-export interface IProps extends RouteComponentProps {
+export interface IProps
+  extends RouteComponentProps,
+    React.HTMLAttributes<React.CSSProperties> {
   type: "home" | "back";
   title?: string;
+  style?: React.CSSProperties;
 }
 
 class Header extends React.Component<IProps> {
@@ -33,7 +36,7 @@ class Header extends React.Component<IProps> {
     const { type, title } = this.props;
     const showTit = type === "back";
     return (
-      <header className="header">
+      <header className="header" style={this.props.style}>
         <div className="header-left" onClick={this.goTo}>
           <Icon className={iconClassName[type]}></Icon>
         </div>

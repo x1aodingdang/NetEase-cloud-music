@@ -1,9 +1,9 @@
 //playlist
-export interface IRankingDetailPlaylist {
+export interface IRankingDetailPlaylistInfo {
   subscribers: any[];
   subscribed: boolean;
   creator: Creator;
-  tracks: Track[];
+  tracks: IRankingDetailPlaylist[];
   trackIds: TrackID[];
   updateFrequency: null;
   backgroundCoverId: number;
@@ -79,7 +79,7 @@ export interface TrackID {
   lr?: number;
 }
 
-export interface Track {
+export interface IRankingDetailPlaylist {
   name: string;
   id: number;
   pst: number;

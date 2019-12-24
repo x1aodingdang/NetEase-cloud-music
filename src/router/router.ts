@@ -40,7 +40,7 @@ export default [
   {
     path: "/ranking/detail/:id",
     component: RankingDetail,
-    tabBar: false // 展示 底部 菜单
+    tabBar: true // 展示 底部 菜单
   },
   {
     path: "/ranking",

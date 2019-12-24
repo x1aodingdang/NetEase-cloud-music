@@ -10,6 +10,9 @@ $searchHeight: 1.08rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
+  z-index: 1;
+  color: #000;
 
   .header-search {
     width: 9.06rem;
@@ -18,6 +21,7 @@ $searchHeight: 1.08rem;
     justify-content: center;
     align-items: center;
     font-size: 0.54rem;
+
     input {
       width: 100%;
       height: 100%;
@@ -33,7 +37,6 @@ $searchHeight: 1.08rem;
   .header-right {
     height: 100%;
     width: 1.19rem;
-    color: #000;
     // 扩大点击区域
     // padding: 0.2rem;
     font-size: 0.8rem;

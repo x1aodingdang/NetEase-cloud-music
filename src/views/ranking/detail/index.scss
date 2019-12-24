@@ -1,0 +1,71 @@
+@import '../../../assets/style/var.scss';
+
+.ranking-detail {
+  height: 100%;
+
+  &-container {
+    height: 100%;
+    // background-color: #ff0;
+
+    margin-top: -$homeHeaderHeight + -$homeHeaderPadding * 2;
+
+    &-bg {
+      // margin-top: -$homeHeaderHeight + -$homeHeaderPadding * 2;
+      height: 9rem;
+      background-size: cover;
+      background-repeat: no-repeat;
+
+    }
+
+
+    &-list {
+      // background-color: yellowgreen;
+      height: 16.26rem;
+
+      ul {
+        // height: 20000px;
+        padding: 0 $bothPadding;
+        overflow: hidden;
+
+        .ranking-detail-item {
+          display: flex;
+          margin-top: 0.3rem;
+
+          .ranking-info {
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            margin-right: 0.3rem;
+
+            .ranking-num {
+              font-size: 0.42rem;
+              color: #adafb2;
+
+              &.top3 {
+                color: #cd443e;
+              }
+            }
+
+            .ratio {
+              font-size: 0.2rem;
+              color: #797879;
+            }
+          }
+
+          .music-info {
+            .name {
+              font-size: 0.5rem;
+              color: #303031;
+            }
+
+            .detailedness-name {
+              font-size: 0.35rem;
+              color: #797879;
+            }
+          }
+        }
+
+      }
+    }
+  }
+}
