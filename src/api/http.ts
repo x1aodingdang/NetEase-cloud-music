@@ -1,4 +1,4 @@
-export const API = "http://localhost:9000";
+export const API = "http://10.99.50.89:9000";
 
 export interface IHttpOpt {
   method?: "get" | "post"; // 暂时两种方法

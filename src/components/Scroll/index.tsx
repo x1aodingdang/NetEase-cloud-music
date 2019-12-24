@@ -135,7 +135,7 @@ export default class Srcoll extends React.Component<iProps, iState> {
   // }
 
   componentDidUpdate(prevProps: iProps, prevState: iState) {
-    if (!isPullDowning) {
+    if (!isPullDowning || !prevState.isPullDown) {
       this.refresh();
     }
   }
