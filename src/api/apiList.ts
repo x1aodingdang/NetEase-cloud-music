@@ -8,3 +8,17 @@ export const $APIHomeRecommendPlayList = "/personalized";
 export const $APIRankList = "/toplist/detail"; // 取前四个
 
 export const $APIRankDetail = "/top/list"; // ?idx=1
+
+/**
+ * 歌曲详情
+ * @example /song/detail?ids=347230,/song/detail?ids=347230,347231
+ */
+export const $APISongDetail = "/song/detail";
+
+/**
+ * 获取音乐 url
+ * @description 说明 : 使用歌单详情接口后 , 能得到的音乐的 id, 但不能得到的音乐 url, 调用此接口 , 传入的音乐 id( 可多个 , 用逗号隔开 ), 可以获取对应的音乐的 url( 不需要登录 )
+ * @see https://binaryify.github.io/NeteaseCloudMusicApi/#/?id=%E8%8E%B7%E5%8F%96%E9%9F%B3%E4%B9%90-url
+ * @example 调用例子 : /song/url?id=33894312 /song/url?id=405998841,33894312
+ */
+export const $APIGetMusicUrl = "/song/url";

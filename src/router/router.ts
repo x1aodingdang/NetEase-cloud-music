@@ -5,6 +5,7 @@ import Cloud from "../views/cloud/index";
 import Account from "../views/account/index";
 import Ranking from "../views/ranking/index";
 import RankingDetail from "../views/ranking/detail/index";
+import Play from "../views/play";
 
 // export interface iRouterList {
 
@@ -20,32 +21,38 @@ export default [
   {
     path: "/me",
     component: Me,
-    tabBar: true // 展示 底部 菜单
+    tabBar: true
   },
   {
     path: "/video",
     component: Video,
-    tabBar: true // 展示 底部 菜单
+    tabBar: true
   },
   {
     path: "/cloud",
     component: Account,
-    tabBar: true // 展示 底部 菜单
+    tabBar: true
   },
   {
     path: "/account",
     component: Cloud,
-    tabBar: true // 展示 底部 菜单
+    tabBar: true
   },
   {
     path: "/ranking/detail/:id",
     component: RankingDetail,
-    tabBar: true // 展示 底部 菜单
+    tabBar: true
   },
   {
     path: "/ranking",
     component: Ranking,
-    tabBar: true // 展示 底部 菜单
+    tabBar: true
+  },
+  // 播放音乐页面
+  {
+    path: "/play",
+    component: Play,
+    tabBar: false
   },
   // {
   //   path: "/tacos",

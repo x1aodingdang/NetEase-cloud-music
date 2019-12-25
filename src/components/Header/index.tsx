@@ -51,7 +51,12 @@ class Header extends React.Component<IProps> {
             />
           )}
         </div>
-        <div className="header-right">
+        <div
+          className="header-right"
+          onClick={() => {
+            this.props.history.push("/play");
+          }}
+        >
           <Icon className="icon-audio"></Icon>
         </div>
       </header>
