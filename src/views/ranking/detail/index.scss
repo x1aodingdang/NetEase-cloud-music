@@ -24,7 +24,11 @@
       // 100 vh 在 ios safari chrome 存在一点小问题 暂时先这样
       // 
       height: calc(100vh - (#{$homeHeaderHeightReal + $footerTabBarHeight}));
-
+      border-top-left-radius: 0.5rem;
+      border-top-right-radius: 0.5rem;
+      // overflow: hidden;
+      background-color: #fff;
+      margin-top: -0.5rem;
 
       ul {
         // height: 20000px;
@@ -39,9 +43,11 @@
             display: flex;
             flex-direction: column;
             text-align: center;
+            justify-content: center;
             margin-right: 0.3rem;
 
             .ranking-num {
+              width: 1rem;
               font-size: 0.42rem;
               color: #adafb2;
 
@@ -50,13 +56,17 @@
               }
             }
 
-            .ratio {
+            .rank-change {
               font-size: 0.2rem;
               color: #797879;
             }
           }
 
           .music-info {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+
             .name {
               font-size: 0.5rem;
               color: #303031;

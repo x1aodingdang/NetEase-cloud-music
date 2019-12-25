@@ -65,7 +65,7 @@ class RankingDetail extends React.Component<IProps, IState> {
             <div className={`ranking-num ${i < 3 && "top3"}`}>
               {rankingLenFormat(i + 1)}
             </div>
-            <div className="ratio">{trackIdsItem.ratio}</div>
+            <div className="rank-change">{trackIdsItem.ratio}</div>
           </div>
           <div className="music-info">
             <div className="name">{name}</div>
@@ -82,7 +82,11 @@ class RankingDetail extends React.Component<IProps, IState> {
 
     return (
       <div className="ranking-detail">
-        <Header type="back" title="排行榜" style={{ color: "#fff" }}></Header>
+        <Header
+          type="back"
+          title={name || "排行榜"}
+          style={{ color: "#fff" }}
+        ></Header>
         <div className="ranking-detail-container">
           <Srcoll bounce={false}>
             <div
