@@ -18,7 +18,13 @@
 
     &-list {
       // background-color: yellowgreen;
-      height: 16.26rem;
+      // height: 16.26rem; // 这里不能写固定的 高度  因为 相同的机型  浏览器表现的高度也不一致 
+      // 通过 calc ??
+      // 这里不能用 100% 的原因 父元素 是 scroll 组件
+      // 100 vh 在 ios safari chrome 存在一点小问题 暂时先这样
+      // 
+      height: calc(100vh - (#{$homeHeaderHeightReal + $footerTabBarHeight}));
+
 
       ul {
         // height: 20000px;
