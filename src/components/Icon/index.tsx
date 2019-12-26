@@ -2,7 +2,7 @@
 
 import * as React from "react";
 
-export interface IconProps {
+export interface IconProps extends React.HTMLAttributes<React.CSSProperties> {
   className: string;
 }
 

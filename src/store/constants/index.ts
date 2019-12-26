@@ -13,3 +13,12 @@ export const SETPLAYLIST = "SETPLAYLIST";
  * 设置排行榜官方列表数据
  */
 export const SETRANKOFFCIALLIST = "SETRANKOFFCIALLIST";
+
+/**
+ * @description 设置播放状态
+ */
+export const SETPLAYSTATUS = "SETPLAYSTATUS";
+/**
+ * @description 设置播放器音乐id
+ */
+export const SETSONGID = "SETSONGID";

@@ -3,45 +3,108 @@ import "./index.scss";
 import { connect } from "react-redux";
 import { StoreState } from "../../store";
 import { http } from "../../api/http";
-import { $APISongDetail } from "../../api/apiList";
+import {
+  $APISongDetail,
+  $APIGetMusicUrl,
+  $APICheckMusic,
+  IAPIGetMusicUrl
+} from "../../api/apiList";
 import Header from "../../components/Header";
+import Icon from "../../components/Icon";
+import { Toast } from "antd-mobile";
+import Player from "../../servers/player";
+import { Dispatch } from "redux";
+import { setIPlayStatus } from "../../store/actions/play";
 const coverDefault = require("../../assets/images/play/disc_default.png");
+
+// 思考
+// 触发 play.songId  重新请求 songInfo
 
 export interface IProps {
   songId: number;
+  isPlay: boolean;
+  setIPlayStatus: (arg0: boolean) => void;
 }
 
 export interface IState {
-  songInfo: any;
-  isPlay: boolean;
+  songDetail: any;
+  songUrlInfo: IAPIGetMusicUrl;
+  player: Player;
 }
 
 class Play extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     this.state = {
-      songInfo: {},
-      isPlay: false
+      songDetail: {},
+      songUrlInfo: {} as IAPIGetMusicUrl,
+      player: {} as Player
     };
   }
   componentDidMount() {
+    const { isPlay } = this.props;
     this.getDateil();
+    if (isPlay) return;
+    console.log("我开始了");
+    this.checkMusicUrl();
   }
   getDateil() {
     http($APISongDetail, { data: { ids: this.props.songId } }).then(
       (res: any) => {
         this.setState({
-          songInfo: res.songs[0]
+          songDetail: res.songs[0]
           // picUrl: res.
         });
       }
     );
   }
+  checkMusicUrl() {
+    const id = this.props.songId;
+    http($APICheckMusic, { data: { id } }).then((res: any) => {
+      if (res.success) {
+        return this.getMusicUrl();
+      }
+      Toast.info(res.message);
+    });
+  }
+  getMusicUrl() {
+    const id = this.props.songId;
+    http($APIGetMusicUrl, {
+      data: { id }
+    }).then((res: any) => {
+      const data: IAPIGetMusicUrl[] = res.data;
+      const songUrlInfo = data[0];
+      this.setState({
+        songUrlInfo
+      });
+      // 拿到 当前请求的  可以播放了
+      if (songUrlInfo && songUrlInfo.url) {
+        this.play();
+      }
+    });
+  }
+  play() {
+    const { songUrlInfo } = this.state;
+    this.props.setIPlayStatus(true);
+    const player: Player = new Player(songUrlInfo.url);
+    this.setState({
+      player
+    });
+  }
+  changePlayStatu = (isPlay: boolean) => {
+    //  需要暂停
+    if (isPlay) {
+      this.state.player.player.pause();
+    } else {
+      this.state.player.play();
+    }
+    this.props.setIPlayStatus(!isPlay);
+  };
   render() {
     const {
-      songInfo: { al = { picUrl: "" }, name },
-      isPlay
+      songDetail: { al = { picUrl: "" }, name }
     } = this.state;
+    const { isPlay } = this.props;
     const cover = al.picUrl || coverDefault;
     return (
       <div className="play-music">
@@ -65,15 +128,24 @@ class Play extends React.Component<IProps, IState> {
               {/* <div className="song-cover"></div> */}
             </div>
           </div>
-          <div
-            style={{ color: "#fff" }}
-            onClick={() => {
-              this.setState({
-                isPlay: !isPlay
-              });
-            }}
-          >
-            {isPlay ? "暂停" : "播放"}
+          {/* 操作 */}
+          <div className="actions">
+            <div className="prev-btn">
+              <Icon className="icon-xiayigexiayishou"></Icon>
+            </div>
+
+            <div
+              className="play-btn"
+              onClick={() => {
+                this.changePlayStatu(isPlay);
+                // this.props.setIPlayStatus(!isPlay);
+              }}
+            >
+              <Icon className={isPlay ? "icon-zanting2" : "icon-bofang"}></Icon>
+            </div>
+            <div className="next-btn">
+              <Icon className="icon-animation-next"></Icon>
+            </div>
           </div>
         </div>
       </div>
@@ -81,6 +153,12 @@ class Play extends React.Component<IProps, IState> {
   }
 }
 
-export default connect((state: StoreState) => ({
-  songId: state.play.songId
-}))(Play);
+export default connect(
+  (state: StoreState) => ({
+    songId: state.play.songId,
+    isPlay: state.play.isPlay
+  }),
+  (dispatch: Dispatch) => ({
+    setIPlayStatus: (flag: boolean) => dispatch(setIPlayStatus(flag))
+  })
+)(Play);

@@ -1,4 +1,9 @@
+import { $APICheckMusic } from "./apiList";
+
 export const API = "http://10.99.50.89:9000";
+
+// 不需要  判断 code 码 等于200的接口
+const noCode200 = [$APICheckMusic];
 
 export interface IHttpOpt {
   method?: "get" | "post"; // 暂时两种方法
@@ -16,7 +21,7 @@ export const http = (url: string, opt?: IHttpOpt) => {
   const { method = "get", data = {}, headers = {} } = opt || {};
   const isGet = method === "get";
   // if (isGet) {
-  url = `${API}${url}${isGet && objToQueryStr(data)}`;
+  const urlQuery = `${API}${url}${isGet && objToQueryStr(data)}`;
   // }
   const options = {
     method,
@@ -26,13 +31,15 @@ export const http = (url: string, opt?: IHttpOpt) => {
       ...headers
     }
   };
-  return new Promise((res, rej) => {
-    fetch(url, options)
+  return new Promise<any>((res, rej) => {
+    fetch(urlQuery, options)
       .then(response => {
         response.json().then((data: any) => {
+          if (noCode200.includes(url)) {
+            return res(data);
+          }
           if (data.code === 200) {
-            res(data);
-            return;
+            return res(data);
           }
           rej(data);
         });

@@ -82,6 +82,23 @@
         }
       }
     }
+
+    .actions {
+      margin-top: 4rem;
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+      color: #fff;
+
+      .play-btn {
+        font-size: 1.8rem;
+      }
+
+      .prev-btn,
+      .next-btn {
+        font-size: 0.62rem;
+      }
+    }
   }
 
 
