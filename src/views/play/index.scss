@@ -37,11 +37,14 @@
         background-size: contain;
         position: absolute;
         top: 0.325rem;
-        transform: translateX(40%) rotateZ(-45deg);
-        transform: translateX(40%);
-        transform-origin: 0 0.445rem; // 这里 地方 需要改一下
-        // 找到 指针图片 坐标上的原点
         z-index: 5;
+        transform: translateX(40%) rotateZ(-35deg);
+        transform-origin: .5rem 0; // 找到 指针图片 坐标上的原点
+        transition: transform 1s;
+
+        &.active {
+          transform: translateX(40%);
+        }
 
         &::before {
           content: '';
@@ -55,9 +58,6 @@
           box-shadow: 0px 0px 0px .12rem rgba(0, 0, 0, .2);
           //1.水平阴影  2.垂直阴影 3.模糊距离，改虚实 4.阴影尺寸
         }
-
-        // background-size: 3rem 4.8rem;
-
       }
 
       .disc-bg {
@@ -68,15 +68,17 @@
         height: 10.23rem;
         background: url('../../assets/images/play/disc-plus.png');
         background-size: contain;
+        animation: rotating 20s infinite linear forwards paused;
 
-        animation: rotating 20s infinite linear;
+        &.active {
+          animation-play-state: running;
+        }
 
         .song-cover {
           width: 6.38rem;
           height: 6.38rem;
           background-size: contain;
           border-radius: 50%;
-          ;
         }
       }
     }
@@ -88,10 +90,6 @@
 
 @keyframes rotating {
   0% {}
-
-  50% {
-    // transform: rotateZ(180deg);
-  }
 
   100% {
     transform: rotateZ(360deg);

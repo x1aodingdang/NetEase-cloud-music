@@ -13,13 +13,15 @@ export interface IProps {
 
 export interface IState {
   songInfo: any;
+  isPlay: boolean;
 }
 
 class Play extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     this.state = {
-      songInfo: {}
+      songInfo: {},
+      isPlay: false
     };
   }
   componentDidMount() {
@@ -37,7 +39,8 @@ class Play extends React.Component<IProps, IState> {
   }
   render() {
     const {
-      songInfo: { al = { picUrl: "" }, name }
+      songInfo: { al = { picUrl: "" }, name },
+      isPlay
     } = this.state;
     const cover = al.picUrl || coverDefault;
     return (
@@ -51,8 +54,8 @@ class Play extends React.Component<IProps, IState> {
         <Header type="back" title={name} style={{ color: "#FFF" }}></Header>
         <div className="play-music-container">
           <div className="disc">
-            <div className="disc-needle"></div>
-            <div className="disc-bg">
+            <div className={`disc-needle ${isPlay && "active"}`}></div>
+            <div className={`disc-bg ${isPlay && "active"}`}>
               <div
                 className="song-cover"
                 style={{
@@ -62,7 +65,16 @@ class Play extends React.Component<IProps, IState> {
               {/* <div className="song-cover"></div> */}
             </div>
           </div>
-          <div style={{ color: "#fff" }}>播放 暂停</div>
+          <div
+            style={{ color: "#fff" }}
+            onClick={() => {
+              this.setState({
+                isPlay: !isPlay
+              });
+            }}
+          >
+            {isPlay ? "暂停" : "播放"}
+          </div>
         </div>
       </div>
     );
