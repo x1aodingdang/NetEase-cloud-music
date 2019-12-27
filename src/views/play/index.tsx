@@ -20,6 +20,16 @@ const coverDefault = require("../../assets/images/play/disc_default.png");
 
 // 思考
 // 触发 play.songId  重新请求 songInfo
+// songDetail  songUrlInfo  这里应该也存在 redux 里边
+// mount
+// 从 redux 取出 songId
+// 触发 actions 获取最新的  songDetail songUrlInfo
+// 页面那到这些数据  ->  play
+
+// 切换歌曲
+// 应该有一个 songIdList
+// ？ 这个 songIdList 该怎么拿？
+// 1. 点击 排行榜 的时候设置 这个 list
 
 export interface IProps {
   songId: number;
@@ -49,8 +59,10 @@ class Play extends React.Component<IProps, IState> {
   componentDidMount() {
     const { isPlay } = this.props;
     this.getDateil();
+    this.setState({
+      player: Player.getLastInstance()
+    });
     if (isPlay) return;
-    console.log("我开始了");
     this.checkMusicUrl();
   }
   getDateil() {
@@ -105,6 +117,7 @@ class Play extends React.Component<IProps, IState> {
         });
       }
     });
+    Player.setplayerlist(player);
     this.setState({
       player
     });

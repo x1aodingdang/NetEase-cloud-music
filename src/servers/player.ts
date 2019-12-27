@@ -1,6 +1,6 @@
 import { Howl, Howler } from "howler";
 
-const playerlist = [];
+const playerlist: Player[] = [];
 
 interface IPlayerOpt {
   src: string;
@@ -40,7 +40,6 @@ export default class Player {
         }, 1000);
       }
     });
-    playerlist.push(this.player);
     this.play();
   }
 
@@ -59,5 +58,12 @@ export default class Player {
   progress(onProgress?: (curDuration: number) => void) {
     const time = this.player.seek() as number;
     typeof onProgress === "function" && onProgress(time);
+  }
+
+  static setplayerlist(Player: Player) {
+    playerlist.push(Player);
+  }
+  static getLastInstance(): Player {
+    return playerlist[playerlist.length - 1];
   }
 }
