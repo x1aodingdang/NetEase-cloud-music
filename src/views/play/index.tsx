@@ -15,6 +15,7 @@ import { Toast } from "antd-mobile";
 import Player from "../../servers/player";
 import { Dispatch } from "redux";
 import { setIPlayStatus } from "../../store/actions/play";
+import { secondToMinuteSecond } from "../../utils";
 const coverDefault = require("../../assets/images/play/disc_default.png");
 
 // 思考
@@ -30,6 +31,8 @@ export interface IState {
   songDetail: any;
   songUrlInfo: IAPIGetMusicUrl;
   player: Player;
+  duration: number;
+  curDuration: number;
 }
 
 class Play extends React.Component<IProps, IState> {
@@ -38,7 +41,9 @@ class Play extends React.Component<IProps, IState> {
     this.state = {
       songDetail: {},
       songUrlInfo: {} as IAPIGetMusicUrl,
-      player: {} as Player
+      player: {} as Player,
+      duration: 0, // 当前音乐的时长  秒为单位
+      curDuration: 0 // 当前音乐的播放中进度时长  秒为单位
     };
   }
   componentDidMount() {
@@ -86,7 +91,20 @@ class Play extends React.Component<IProps, IState> {
   play() {
     const { songUrlInfo } = this.state;
     this.props.setIPlayStatus(true);
-    const player: Player = new Player(songUrlInfo.url);
+    const player: Player = new Player({
+      src: songUrlInfo.url,
+      onload: ({ duration }) => {
+        this.setState({
+          duration
+        });
+      },
+      // 播放状态中 一秒钟执行一次  用来改变进度
+      onProgress: curDuration => {
+        this.setState({
+          curDuration
+        });
+      }
+    });
     this.setState({
       player
     });
@@ -94,7 +112,7 @@ class Play extends React.Component<IProps, IState> {
   changePlayStatu = (isPlay: boolean) => {
     //  需要暂停
     if (isPlay) {
-      this.state.player.player.pause();
+      this.state.player.pause();
     } else {
       this.state.player.play();
     }
@@ -102,7 +120,9 @@ class Play extends React.Component<IProps, IState> {
   };
   render() {
     const {
-      songDetail: { al = { picUrl: "" }, name }
+      songDetail: { al = { picUrl: "" }, name },
+      duration,
+      curDuration
     } = this.state;
     const { isPlay } = this.props;
     const cover = al.picUrl || coverDefault;
@@ -127,6 +147,22 @@ class Play extends React.Component<IProps, IState> {
               ></div>
               {/* <div className="song-cover"></div> */}
             </div>
+          </div>
+          {/* 时间进度 */}
+          <div className="progress">
+            <div>{secondToMinuteSecond(curDuration)}</div>
+            <div className="progress-bar">
+              <div
+                className="active"
+                style={{
+                  // transform: `translateY(-0.1rem) translateX(${(curDuration /
+                  //   duration) *
+                  //   100}%)`,
+                  left: `${(curDuration / duration) * 100}%`
+                }}
+              ></div>
+            </div>
+            <div>{secondToMinuteSecond(duration)}</div>
           </div>
           {/* 操作 */}
           <div className="actions">
