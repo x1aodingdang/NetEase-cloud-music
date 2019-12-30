@@ -25,7 +25,7 @@ export interface IProps extends RouteComponentProps<IParams> {
 
 export interface IState {
   playlist: IRankingDetailPlaylist[];
-  playlistInfo: IRankingDetailPlaylistInfo | any;
+  playlistInfo: IRankingDetailPlaylistInfo;
   privileges: IRankingDetailPrivileges[];
 }
 
@@ -34,7 +34,7 @@ class RankingDetail extends React.Component<IProps, IState> {
     super(props);
     this.state = {
       playlist: [],
-      playlistInfo: {},
+      playlistInfo: {} as IRankingDetailPlaylistInfo,
       privileges: []
     };
   }
@@ -52,8 +52,8 @@ class RankingDetail extends React.Component<IProps, IState> {
   }
 
   goPlay = (id: number) => {
-    this.props.setSongId(id);
-    this.props.history.push("/play");
+    // this.props.setSongId(id);
+    this.props.history.push(`/play/${id}`);
   };
 
   render() {

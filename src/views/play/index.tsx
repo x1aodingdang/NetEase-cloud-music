@@ -17,7 +17,8 @@ import { Dispatch } from "redux";
 import {
   setPlayStatus,
   setDuration,
-  setCurrentDuration
+  setCurrentDuration,
+  setSongId
 } from "../../store/actions/play";
 import { RouteComponentProps } from "react-router-dom";
 import PlayProgress from "./progress";
@@ -25,6 +26,9 @@ const coverDefault = require("../../assets/images/play/disc_default.png");
 
 // 思考
 // 触发 play.songId  重新请求 songInfo
+// 1.  从外面点进来 播放页面  什么时候  应该切换 什么时候不切换
+// 在play 页面 加个  参数吧  为 songId  相同不切换 不同就切换
+
 // songDetail  songUrlInfo  这里应该也存在 redux 里边
 // mount
 // 从 redux 取出 songId
@@ -36,10 +40,14 @@ const coverDefault = require("../../assets/images/play/disc_default.png");
 // ？ 这个 songIdList 该怎么拿？  songIdList 应该在 本地在存储一份
 // 1. 点击 排行榜 的时候设置 这个 list
 
-export interface IProps extends RouteComponentProps {
+export interface IProps
+  extends RouteComponentProps<{
+    id: string;
+  }> {
   songId: number;
   isPlay: boolean;
 
+  setSongId: (arg0: number) => void;
   setPlayStatus: (arg0: boolean) => void;
   setDuration: (arg0: number) => void;
   setCurrentDuration: (arg0: number) => void;
@@ -61,18 +69,32 @@ class Play extends React.Component<IProps, IState> {
     };
   }
   componentDidMount() {
-    console.log("componentDidMount 执行了");
-    const { isPlay, songId } = this.props;
-    if (!songId) {
+    const { songId, setSongId } = this.props;
+    const { id } = this.props.match.params;
+    // res 判断当前播放的音乐是否和params.id 相等
+    // 如果相等 获取 页面信息（getDateil） 设置 player （Player.getLastInstance()）
+    // else 切换到 id 歌曲  销毁上一首 再加载当前
+    const res = Number(id) === songId;
+    // console.log("componentDidMount 执行了", res);
+
+    if (!id) {
       return Toast.info("播放错误", undefined, () => {
         this.props.history.goBack();
       });
     } //
-    this.getDateil();
-    this.setState({
-      player: Player.getLastInstance()
-    });
-    if (isPlay) return;
+
+    this.getDateil(); // 这里可以 优化一下  放在 redux 以至于打开同一个歌曲的时候 在请求一次
+    !res && setSongId(Number(id));
+    const lastPlayerInstance = Player.getLastInstance();
+    if (res) {
+      this.setState({
+        player: lastPlayerInstance
+      });
+      !lastPlayerInstance && this.checkMusicUrl(); // 没有 实例 证明是 头一次打开（页面刷新了）
+      return;
+    }
+    // 将上一首歌 销毁
+    lastPlayerInstance && lastPlayerInstance.player.unload();
     this.checkMusicUrl();
   }
   static getDerivedStateFromProps(props: IProps, state: IState) {
@@ -81,7 +103,7 @@ class Play extends React.Component<IProps, IState> {
   }
 
   getDateil() {
-    http($APISongDetail, { data: { ids: this.props.songId } }).then(
+    http($APISongDetail, { data: { ids: this.props.match.params.id } }).then(
       (res: any) => {
         this.setState({
           songDetail: res.songs[0]
@@ -90,8 +112,9 @@ class Play extends React.Component<IProps, IState> {
       }
     );
   }
+  // 检测是否可以播放 如果可以 就直接播放了
   checkMusicUrl() {
-    const id = this.props.songId;
+    const id = this.props.match.params.id;
     http($APICheckMusic, { data: { id } }).then((res: any) => {
       if (res.success) {
         return this.getMusicUrl();
@@ -100,7 +123,7 @@ class Play extends React.Component<IProps, IState> {
     });
   }
   getMusicUrl() {
-    const id = this.props.songId;
+    const id = this.props.match.params.id;
     http($APIGetMusicUrl, {
       data: { id }
     }).then((res: any) => {
@@ -205,6 +228,7 @@ export default connect(
     isPlay: state.play.isPlay
   }),
   (dispatch: Dispatch) => ({
+    setSongId: (id: number) => dispatch(setSongId(id)),
     setPlayStatus: (flag: boolean) => dispatch(setPlayStatus(flag)),
     setDuration: (duration: number) => dispatch(setDuration(duration)),
     setCurrentDuration: (curduration: number) =>

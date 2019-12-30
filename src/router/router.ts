@@ -50,7 +50,7 @@ export default [
   },
   // 播放音乐页面
   {
-    path: "/play",
+    path: "/play/:id",
     component: Play,
     tabBar: false
   },

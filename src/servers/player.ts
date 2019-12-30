@@ -18,21 +18,18 @@ export default class Player {
       onload: () => {
         this.duration = this.player.duration();
         typeof onload === "function" && onload({ duration: this.duration });
-
-        console.log("onload success", this.duration);
+      },
+      onstop: () => {
+        clearInterval(this.progressTimeId);
       },
       onend: () => {
         console.log("Finished!");
         clearInterval(this.progressTimeId);
       },
-      onseek: e => {
-        console.log("e", e);
-      },
       onloaderror: () => {
         console.log("onloaderror 加载出错了？");
       },
       onplay: () => {
-        console.log("onplay ");
         this.progress(onProgress);
         clearInterval(this.progressTimeId);
         this.progressTimeId = setInterval(() => {

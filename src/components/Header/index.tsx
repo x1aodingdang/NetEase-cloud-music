@@ -3,6 +3,8 @@ import "./index.scss";
 import Icon from "../Icon";
 import { withRouter, RouteComponentProps } from "react-router-dom";
 import { Toast } from "antd-mobile";
+import { local } from "../../utils";
+import { SETSONGID } from "../../store/constants";
 
 enum iconClassName {
   home = "icon-maikefeng",
@@ -54,7 +56,7 @@ class Header extends React.Component<IProps> {
         <div
           className="header-right"
           onClick={() => {
-            this.props.history.push("/play");
+            this.props.history.push(`/play/${local(SETSONGID)}`);
           }}
         >
           <Icon className="icon-audio"></Icon>
