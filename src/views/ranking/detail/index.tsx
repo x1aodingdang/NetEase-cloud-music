@@ -13,12 +13,14 @@ import {
 import "./index.scss";
 import Srcoll from "../../../components/Scroll";
 import { rankingLenFormat } from "../../../utils";
+import { setSongId } from "../../../store/actions/play";
 
 export interface IParams {
   id: string;
 }
 export interface IProps extends RouteComponentProps<IParams> {
   getRankDetail: (opt: IHttpOpt) => void;
+  setSongId: (id: number) => void;
 }
 
 export interface IState {
@@ -49,10 +51,15 @@ class RankingDetail extends React.Component<IProps, IState> {
     });
   }
 
+  goPlay = (id: number) => {
+    this.props.setSongId(id);
+    this.props.history.push("/play");
+  };
+
   render() {
     const {
       state: {
-        playlistInfo: { coverImgUrl, name, creator, tracks, trackIds },
+        playlistInfo: { coverImgUrl, name, trackIds },
         playlist
       }
     } = this;
@@ -60,7 +67,13 @@ class RankingDetail extends React.Component<IProps, IState> {
     const listItems = playlist.map(({ name, id, ar, al }, i) => {
       const trackIdsItem = trackIds[i] || {};
       return (
-        <li key={id} className="ranking-detail-item">
+        <li
+          key={id}
+          className="ranking-detail-item"
+          onClick={() => {
+            this.goPlay(id);
+          }}
+        >
           <div className="ranking-info">
             <div className={`ranking-num ${i < 3 && "top3"}`}>
               {rankingLenFormat(i + 1)}
@@ -112,6 +125,7 @@ class RankingDetail extends React.Component<IProps, IState> {
 export default connect(
   () => ({}),
   (dispatch: Dispatch) => ({
-    getRankDetail: (opt: IHttpOpt) => dispatch(getRankDetail(opt))
+    getRankDetail: (opt: IHttpOpt) => dispatch(getRankDetail(opt)),
+    setSongId: (id: number) => dispatch(setSongId(id))
   })
 )(RankingDetail);

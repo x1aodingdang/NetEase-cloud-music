@@ -1,6 +1,6 @@
 import * as React from "react";
 import "./index.scss";
-import officialList from "./list";
+// import officialList from "./list";
 import { connect } from "react-redux";
 import { StoreState } from "../../../store";
 import { IRankOfficialList } from "../../../store/reducers/ranking";

@@ -14,8 +14,13 @@ import Icon from "../../components/Icon";
 import { Toast } from "antd-mobile";
 import Player from "../../servers/player";
 import { Dispatch } from "redux";
-import { setIPlayStatus } from "../../store/actions/play";
-import { secondToMinuteSecond } from "../../utils";
+import {
+  setPlayStatus,
+  setDuration,
+  setCurrentDuration
+} from "../../store/actions/play";
+import { RouteComponentProps } from "react-router-dom";
+import PlayProgress from "./progress";
 const coverDefault = require("../../assets/images/play/disc_default.png");
 
 // 思考
@@ -28,21 +33,22 @@ const coverDefault = require("../../assets/images/play/disc_default.png");
 
 // 切换歌曲
 // 应该有一个 songIdList
-// ？ 这个 songIdList 该怎么拿？
+// ？ 这个 songIdList 该怎么拿？  songIdList 应该在 本地在存储一份
 // 1. 点击 排行榜 的时候设置 这个 list
 
-export interface IProps {
+export interface IProps extends RouteComponentProps {
   songId: number;
   isPlay: boolean;
-  setIPlayStatus: (arg0: boolean) => void;
+
+  setPlayStatus: (arg0: boolean) => void;
+  setDuration: (arg0: number) => void;
+  setCurrentDuration: (arg0: number) => void;
 }
 
 export interface IState {
   songDetail: any;
   songUrlInfo: IAPIGetMusicUrl;
   player: Player;
-  duration: number;
-  curDuration: number;
 }
 
 class Play extends React.Component<IProps, IState> {
@@ -51,13 +57,17 @@ class Play extends React.Component<IProps, IState> {
     this.state = {
       songDetail: {},
       songUrlInfo: {} as IAPIGetMusicUrl,
-      player: {} as Player,
-      duration: 0, // 当前音乐的时长  秒为单位
-      curDuration: 0 // 当前音乐的播放中进度时长  秒为单位
+      player: {} as Player
     };
   }
   componentDidMount() {
-    const { isPlay } = this.props;
+    console.log("componentDidMount 执行了");
+    const { isPlay, songId } = this.props;
+    if (!songId) {
+      return Toast.info("播放错误", undefined, () => {
+        this.props.history.goBack();
+      });
+    } //
     this.getDateil();
     this.setState({
       player: Player.getLastInstance()
@@ -65,6 +75,11 @@ class Play extends React.Component<IProps, IState> {
     if (isPlay) return;
     this.checkMusicUrl();
   }
+  static getDerivedStateFromProps(props: IProps, state: IState) {
+    console.log(props, state);
+    return null;
+  }
+
   getDateil() {
     http($APISongDetail, { data: { ids: this.props.songId } }).then(
       (res: any) => {
@@ -102,19 +117,16 @@ class Play extends React.Component<IProps, IState> {
   }
   play() {
     const { songUrlInfo } = this.state;
-    this.props.setIPlayStatus(true);
+    const { setPlayStatus, setDuration, setCurrentDuration } = this.props;
+    setPlayStatus(true);
     const player: Player = new Player({
       src: songUrlInfo.url,
       onload: ({ duration }) => {
-        this.setState({
-          duration
-        });
+        setDuration(duration);
       },
       // 播放状态中 一秒钟执行一次  用来改变进度
       onProgress: curDuration => {
-        this.setState({
-          curDuration
-        });
+        setCurrentDuration(curDuration);
       }
     });
     Player.setplayerlist(player);
@@ -129,13 +141,11 @@ class Play extends React.Component<IProps, IState> {
     } else {
       this.state.player.play();
     }
-    this.props.setIPlayStatus(!isPlay);
+    this.props.setPlayStatus(!isPlay);
   };
   render() {
     const {
-      songDetail: { al = { picUrl: "" }, name },
-      duration,
-      curDuration
+      songDetail: { al = { picUrl: "" }, name }
     } = this.state;
     const { isPlay } = this.props;
     const cover = al.picUrl || coverDefault;
@@ -162,21 +172,8 @@ class Play extends React.Component<IProps, IState> {
             </div>
           </div>
           {/* 时间进度 */}
-          <div className="progress">
-            <div>{secondToMinuteSecond(curDuration)}</div>
-            <div className="progress-bar">
-              <div
-                className="active"
-                style={{
-                  // transform: `translateY(-0.1rem) translateX(${(curDuration /
-                  //   duration) *
-                  //   100}%)`,
-                  left: `${(curDuration / duration) * 100}%`
-                }}
-              ></div>
-            </div>
-            <div>{secondToMinuteSecond(duration)}</div>
-          </div>
+          <PlayProgress />
+
           {/* 操作 */}
           <div className="actions">
             <div className="prev-btn">
@@ -187,7 +184,7 @@ class Play extends React.Component<IProps, IState> {
               className="play-btn"
               onClick={() => {
                 this.changePlayStatu(isPlay);
-                // this.props.setIPlayStatus(!isPlay);
+                // this.props.setPlayStatus(!isPlay);
               }}
             >
               <Icon className={isPlay ? "icon-zanting2" : "icon-bofang"}></Icon>
@@ -208,6 +205,9 @@ export default connect(
     isPlay: state.play.isPlay
   }),
   (dispatch: Dispatch) => ({
-    setIPlayStatus: (flag: boolean) => dispatch(setIPlayStatus(flag))
+    setPlayStatus: (flag: boolean) => dispatch(setPlayStatus(flag)),
+    setDuration: (duration: number) => dispatch(setDuration(duration)),
+    setCurrentDuration: (curduration: number) =>
+      dispatch(setCurrentDuration(curduration))
   })
 )(Play);

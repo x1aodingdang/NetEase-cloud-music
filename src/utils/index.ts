@@ -23,3 +23,11 @@ export const secondToMinuteSecond = (duration: number) => {
   const s = Math.ceil(duration % 60);
   return `${rankingLenFormat(m)}:${rankingLenFormat(s)}`;
 };
+
+export const local = (key: string, val?: any) => {
+  if (val === undefined) {
+    return JSON.parse(localStorage.getItem(key) as string);
+  }
+  const strVal = JSON.stringify(val);
+  return localStorage.setItem(key, strVal);
+};

@@ -22,3 +22,13 @@ export const SETPLAYSTATUS = "SETPLAYSTATUS";
  * @description 设置播放器音乐id
  */
 export const SETSONGID = "SETSONGID";
+
+/**
+ * @description 设置音乐总时长
+ */
+export const SETDURATION = "SETDURATION";
+
+/**
+ * @description 设置音乐当前播放的时间点
+ */
+export const SETCURRENTDURATION = "SETCURRENTDURATION";
