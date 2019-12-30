@@ -97,7 +97,7 @@ class Play extends React.Component<IProps, IState> {
     this.checkMusicUrl();
   }
   static getDerivedStateFromProps(props: IProps, state: IState) {
-    console.log(props, state);
+    // console.log(props, state);
     return null;
   }
 
@@ -149,6 +149,10 @@ class Play extends React.Component<IProps, IState> {
       // 播放状态中 一秒钟执行一次  用来改变进度
       onProgress: curDuration => {
         setCurrentDuration(curDuration);
+      },
+      // 播放结束了  这里应该有切换下一首的东西
+      onend: () => {
+        console.log("播放完毕");
       }
     });
     Player.setplayerlist(player);

@@ -5,13 +5,14 @@ const playerlist: Player[] = [];
 interface IPlayerOpt {
   src: string;
   onload?: (data: { duration: number }) => void;
+  onend?: () => void;
   onProgress?: (curDuration: number) => void;
 }
 export default class Player {
   player: Howl;
   duration!: number;
   progressTimeId!: NodeJS.Timeout;
-  constructor({ src, onload, onProgress }: IPlayerOpt) {
+  constructor({ src, onload, onProgress, onend }: IPlayerOpt) {
     this.player = new Howl({
       src: src,
       autoplay: true,
@@ -25,6 +26,7 @@ export default class Player {
       onend: () => {
         console.log("Finished!");
         clearInterval(this.progressTimeId);
+        typeof onend === "function" && onend();
       },
       onloaderror: () => {
         console.log("onloaderror 加载出错了？");
