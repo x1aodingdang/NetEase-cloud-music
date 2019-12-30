@@ -26,14 +26,13 @@ const coverDefault = require("../../assets/images/play/disc_default.png");
 
 // 思考
 // 触发 play.songId  重新请求 songInfo
-// 1.  从外面点进来 播放页面  什么时候  应该切换 什么时候不切换
-// 在play 页面 加个  参数吧  为 songId  相同不切换 不同就切换
-
+// 1.  从外面点进来 播放页面  什么时候  应该切换 什么时候不切换   ✅
+// 在play 页面 加个  参数吧  为 songId  相同不切换 不同就切换   ✅
+// getDateil 放到 redux
 // songDetail  songUrlInfo  这里应该也存在 redux 里边
+
 // mount
-// 从 redux 取出 songId
-// 触发 actions 获取最新的  songDetail songUrlInfo
-// 页面那到这些数据  ->  play
+// 从 redux 取出 songId  ✅
 
 // 切换歌曲
 // 应该有一个 songIdList
