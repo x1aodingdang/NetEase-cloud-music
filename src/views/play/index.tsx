@@ -68,7 +68,7 @@ class Play extends React.Component<IProps, IState> {
     };
   }
   componentDidMount() {
-    const { songId, setSongId, setCurrentDuration } = this.props;
+    const { songId, setSongId, setCurrentDuration, setPlayStatus } = this.props;
     const { id } = this.props.match.params;
     // res 判断当前播放的音乐是否和params.id 相等
     // 如果相等 获取 页面信息（getDateil） 设置 player （Player.getLastInstance()）
@@ -93,6 +93,8 @@ class Play extends React.Component<IProps, IState> {
       return;
     }
     setCurrentDuration(0);
+    setPlayStatus(false);
+
     // 将上一首歌 销毁
     lastPlayerInstance && lastPlayerInstance.player.unload();
     this.checkMusicUrl();
