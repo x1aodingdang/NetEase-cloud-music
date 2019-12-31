@@ -39,7 +39,7 @@ export default class Player {
         }, 1000);
       }
     });
-    this.play();
+    // this.play();
   }
 
   init() {}
@@ -60,6 +60,11 @@ export default class Player {
   }
 
   static setplayerlist(Player: Player) {
+    // 防止 出现多个 实例在同时播放
+    playerlist.forEach(v => {
+      v.player.unload && v.player.unload();
+    });
+    playerlist.pop();
     playerlist.push(Player);
   }
   static getLastInstance(): Player {

@@ -12,13 +12,14 @@ export interface IState {
   isPlay: boolean;
   duration: number;
   curDuration: number;
+  playList: number[];
 }
 export const initialState: IState = {
-  songId: local(SETSONGID), // 当前 播放的 id 1363948882
-  // 无版权的 1363948882  // 正常的 1363948882
+  songId: local(SETSONGID), // 当前 播放的 id
   isPlay: false, // 音乐是否在播放中
   duration: 0, // 当前音乐的时长  秒为单位
-  curDuration: 0 // 当前音乐的播放中进度时长  秒为单位
+  curDuration: 0, // 当前音乐的播放中进度时长  秒为单位
+  playList: [452601948, 347230, 554241732]
 };
 export const reducer = (state: IState = initialState, action: IPlayAction) => {
   switch (action.type) {
