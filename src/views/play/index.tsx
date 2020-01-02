@@ -1,14 +1,7 @@
 import * as React from "react";
 import "./index.scss";
-import { connect, connectAdvanced } from "react-redux";
+import { connect } from "react-redux";
 import { StoreState } from "../../store";
-import { http } from "../../api/http";
-import {
-  $APISongDetail,
-  $APIGetMusicUrl,
-  $APICheckMusic,
-  IAPIGetMusicUrl
-} from "../../api/apiList";
 import Header from "../../components/Header";
 import Icon from "../../components/Icon";
 import { Toast } from "antd-mobile";
@@ -18,10 +11,16 @@ import {
   setPlayStatus,
   setDuration,
   setCurrentDuration,
-  setSongId
+  setSongId,
+  getMusicDetail,
+  checkMusicUrl,
+  initPlayer,
+  next,
+  prev
 } from "../../store/actions/play";
 import { RouteComponentProps } from "react-router-dom";
 import PlayProgress from "./progress";
+import { IMusicDetail, IMusicUrl } from "../../store/reducers/play/interface";
 const coverDefault = require("../../assets/images/play/disc_default.png");
 
 // 思考
@@ -35,37 +34,48 @@ const coverDefault = require("../../assets/images/play/disc_default.png");
 // 从 redux 取出 songId  ✅
 
 // 切换歌曲
-// 应该有一个 songIdList
-// ？ 这个 songIdList 该怎么拿？  songIdList 应该在 本地在存储一份
+// 应该有一个 songIdList✅
+// ？ 这个 songIdList 该怎么拿？  songIdList 应该在 本地在存储一份✅
 // 1. 点击 排行榜 的时候设置 这个 list
+
+//  未完成
+// 1. songIdList 目前是写死的
+// 2. 后台播放有重大问题   应当把播放逻辑 迁移到 redux 这个页面只做展示  逻辑开始迁移...
+//     迁移到 redux
+//     getDetail
+//     checkMusicUrl
+//     getMusicUrl
+//     play
+//     next pre
+//     init
 
 export interface IProps
   extends RouteComponentProps<{
     id: string;
   }> {
+  playerInstance: Player;
   songId: number;
   isPlay: boolean;
   playList: number[];
+  musicDetail: IMusicDetail;
+  musicUrl: IMusicUrl;
   setSongId: (id: number) => void;
   setPlayStatus: (flag: boolean) => void;
   setDuration: (duration: number) => void;
   setCurrentDuration: (curDuration: number) => void;
+  getMusicDetail: (id: number) => void;
+  checkMusicUrl: (id: number) => void;
+  initPlayer: (id: number) => void;
+  next: (lastId?: number) => void;
+  prev: (lastId?: number) => void;
 }
 
-export interface IState {
-  songDetail: any;
-  songUrlInfo: IAPIGetMusicUrl;
-  player: Player;
-}
+export interface IState {}
 
 class Play extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
-    this.state = {
-      songDetail: {},
-      songUrlInfo: {} as IAPIGetMusicUrl,
-      player: {} as Player
-    };
+    this.state = {};
   }
   componentDidMount() {
     this.init();
@@ -78,7 +88,13 @@ class Play extends React.Component<IProps, IState> {
       });
     }
 
-    const { songId, setSongId, setCurrentDuration, setPlayStatus } = this.props;
+    const {
+      songId,
+      setSongId,
+      setCurrentDuration,
+      setPlayStatus,
+      initPlayer
+    } = this.props;
     // const { id } = this.props.match.params;
     setSongId(id);
 
@@ -88,138 +104,54 @@ class Play extends React.Component<IProps, IState> {
     const res = id === songId;
     // console.log("componentDidMount 执行了", res, id);
 
-    this.getDateil(id); // 这里可以 优化一下  放在 redux 以至于打开同一个歌曲的时候 在请求一次
+    // getMusicDetail(id); // 这里可以 优化一下  放在 redux 以至于打开同一个歌曲的时候 在请求一次
 
     const lastPlayerInstance = Player.getLastInstance();
     if (res) {
       this.setState({
         player: lastPlayerInstance
       });
-      !lastPlayerInstance && this.checkMusicUrl(id); // 没有 实例 证明是 头一次打开（页面刷新了）
+      !lastPlayerInstance && initPlayer(id); // 没有 实例 证明是 头一次打开（页面刷新了）
       return;
     }
     setCurrentDuration(0);
     setPlayStatus(false);
 
     // 将上一首歌 销毁
-    lastPlayerInstance && lastPlayerInstance.player.unload();
-    this.checkMusicUrl(id);
+    // lastPlayerInstance && lastPlayerInstance.player.unload();
+    initPlayer(id);
   };
 
-  getDateil(id: number) {
-    http($APISongDetail, { data: { ids: id } }).then((res: any) => {
-      this.setState({
-        songDetail: res.songs[0]
-        // picUrl: res.
-      });
-    });
-  }
-  // 检测是否可以播放 如果可以 就直接播放了
-  checkMusicUrl(id: number) {
-    http($APICheckMusic, { data: { id } }).then((res: any) => {
-      if (res.success) {
-        return this.getMusicUrl(id);
-      }
-      Toast.info(res.message);
-    });
-  }
-  getMusicUrl(id: number) {
-    http($APIGetMusicUrl, {
-      data: { id }
-    }).then((res: any) => {
-      const data: IAPIGetMusicUrl[] = res.data;
-      const songUrlInfo = data[0];
-      this.setState({
-        songUrlInfo
-      });
-      // 拿到 当前请求的  可以播放了
-      if (songUrlInfo && songUrlInfo.url) {
-        this.play();
-      }
-    });
-  }
-  play() {
-    const { songUrlInfo } = this.state;
-    const { setPlayStatus, setDuration, setCurrentDuration } = this.props;
-    setPlayStatus(true);
-    const player: Player = new Player({
-      src: songUrlInfo.url,
-      onload: ({ duration }) => {
-        setDuration(duration);
-      },
-      // 播放状态中 一秒钟执行一次  用来改变进度
-      onProgress: curDuration => {
-        setCurrentDuration(curDuration);
-      },
-      // 播放结束了  这里应该有切换下一首的东西
-      onend: () => {
-        this.next();
-        console.log("播放完毕");
-      }
-    });
-    Player.setplayerlist(player);
-    this.setState({
-      player
-    });
-  }
-  next = () => {
-    console.log("next");
-    const {
-      history,
-      playList,
-      match: {
-        params: { id }
-      }
-    } = this.props;
-    const _id = Number(id);
-    const index = playList.indexOf(_id);
-    let nextId = _id;
-
-    const nextIndex = index + 1;
-    if (index !== -1 && nextIndex < playList.length) {
-      nextId = playList[nextIndex];
-    } else {
-      nextId = playList[0];
-    }
-    history.replace(`/play/${nextId}`);
-    this.init(nextId);
+  next = (id: number) => {
+    const { history, next } = this.props;
+    next(id);
+    // (id: number) => {
+    //   history.replace(`/play/${id}}`);
+    // }
+    // this.init(nextId);
   };
-  pre = () => {
-    console.log("pre");
-    const {
-      history,
-      playList,
-      match: {
-        params: { id }
-      }
-    } = this.props;
-    const _id = Number(id);
-    const index = playList.indexOf(_id);
-    let nextId = _id;
+  pre = (id: number) => {
+    const { history, prev } = this.props;
 
-    const preIndex = index - 1;
-    if (index !== -1 && preIndex !== -1) {
-      nextId = playList[preIndex];
-    } else {
-      nextId = playList[playList.length - 1];
-    }
-    history.replace(`/play/${nextId}`);
-    this.init(nextId);
+    // history.replace(`/play/${nextId}`);
+    prev(id);
   };
   changePlayStatu = (isPlay: boolean) => {
+    const { playerInstance, setPlayStatus } = this.props;
     //  需要暂停
     if (isPlay) {
-      this.state.player.pause();
+      playerInstance.player && playerInstance.player.pause();
     } else {
-      this.state.player.play();
+      playerInstance.player && playerInstance.player.play();
     }
-    this.props.setPlayStatus(!isPlay);
+    setPlayStatus(!isPlay);
   };
   render() {
     const {
-      songDetail: { al = { picUrl: "" }, name }
-    } = this.state;
-    const { isPlay } = this.props;
+      isPlay,
+      musicDetail: { al = { picUrl: "" }, name },
+      songId
+    } = this.props;
     const cover = al.picUrl || coverDefault;
     return (
       <div className="play-music">
@@ -251,7 +183,7 @@ class Play extends React.Component<IProps, IState> {
             <div
               className="prev-btn"
               onClick={() => {
-                this.pre();
+                this.pre(songId);
               }}
             >
               <Icon className="icon-xiayigexiayishou"></Icon>
@@ -269,7 +201,7 @@ class Play extends React.Component<IProps, IState> {
             <div
               className="next-btn"
               onClick={() => {
-                this.next();
+                this.next(songId);
               }}
             >
               <Icon className="icon-animation-next"></Icon>
@@ -283,15 +215,23 @@ class Play extends React.Component<IProps, IState> {
 
 export default connect(
   (state: StoreState) => ({
+    playerInstance: state.play.playerInstance,
     songId: state.play.songId,
     isPlay: state.play.isPlay,
-    playList: state.play.playList
+    playList: state.play.playList,
+    musicDetail: state.play.musicDetail,
+    musicUrl: state.play.musicUrl
   }),
   (dispatch: Dispatch) => ({
     setSongId: (id: number) => dispatch(setSongId(id)),
     setPlayStatus: (flag: boolean) => dispatch(setPlayStatus(flag)),
     setDuration: (duration: number) => dispatch(setDuration(duration)),
     setCurrentDuration: (curduration: number) =>
-      dispatch(setCurrentDuration(curduration))
+      dispatch(setCurrentDuration(curduration)),
+    getMusicDetail: (id: number) => dispatch(getMusicDetail(id)),
+    checkMusicUrl: (id: number) => dispatch(checkMusicUrl(id)),
+    initPlayer: (id: number) => dispatch(initPlayer(id)),
+    next: (id?: number) => dispatch(next(id)),
+    prev: (id?: number) => dispatch(prev(id))
   })
 )(Play);

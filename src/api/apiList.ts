@@ -23,26 +23,6 @@ export const $APISongDetail = "/song/detail";
  */
 export const $APIGetMusicUrl = "/song/url";
 
-export interface IAPIGetMusicUrl {
-  id: number;
-  url: string;
-  br: number;
-  size: number;
-  md5: string;
-  code: number;
-  expi: number;
-  type: string;
-  gain: number;
-  fee: number;
-  uf: null;
-  payed: number;
-  flag: number;
-  canExtend: boolean;
-  freeTrialInfo: null;
-  level: string;
-  encodeType: string;
-}
-
 /**
  *  @description 使用 $APIGetMusicUrl 之前调用  检查是否可以播放（版权）
  *  @example /check/music?id=1407358755

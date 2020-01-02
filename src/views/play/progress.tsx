@@ -28,7 +28,7 @@ class PlayProgress extends React.Component<IProps, IState> {
               // transform: `translateY(-0.1rem) translateX(${(curDuration /
               //   duration) *
               //   100}%)`,
-              left: `${(curDuration / duration) * 100}%`
+              left: `${!curDuration ? 0 : (curDuration / duration) * 100}%`
             }}
           ></div>
         </div>

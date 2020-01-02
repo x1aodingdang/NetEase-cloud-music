@@ -18,6 +18,8 @@ export default class Player {
       autoplay: true,
       onload: () => {
         this.duration = this.player.duration();
+        // this.player.seek(this.duration * 0.95);
+        console.log("onload");
         typeof onload === "function" && onload({ duration: this.duration });
       },
       onstop: () => {
@@ -30,6 +32,9 @@ export default class Player {
       },
       onloaderror: () => {
         console.log("onloaderror 加载出错了？");
+      },
+      onplayerror: () => {
+        console.log("onplayerror");
       },
       onplay: () => {
         this.progress(onProgress);

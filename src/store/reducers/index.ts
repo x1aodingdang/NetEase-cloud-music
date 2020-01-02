@@ -2,7 +2,7 @@ import { combineReducers } from "redux";
 
 import * as Home from "./home";
 import * as RankList from "./ranking";
-import * as Play from "./play";
+import * as Play from "./play/";
 
 // 模块命名空间
 const HOME = "home";
