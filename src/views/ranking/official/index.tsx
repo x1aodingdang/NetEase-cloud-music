@@ -33,10 +33,9 @@ class Official extends React.Component<Props, State> {
   };
 
   render() {
-    // console.log(this.props.rankOfficialList);
+    //
     const items = this.props.rankOfficialList.map(
       ({ id, updateFrequency, coverImgUrl, name, tracks }) => {
-        console.log(id, name);
         return (
           <li
             className="offcial-item"

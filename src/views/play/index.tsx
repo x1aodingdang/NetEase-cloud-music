@@ -9,11 +9,7 @@ import Player from "../../servers/player";
 import { Dispatch } from "redux";
 import {
   setPlayStatus,
-  setDuration,
-  setCurrentDuration,
   setSongId,
-  getMusicDetail,
-  checkMusicUrl,
   initPlayer,
   next,
   prev
@@ -61,10 +57,6 @@ export interface IProps
   musicUrl: IMusicUrl;
   setSongId: (id: number) => void;
   setPlayStatus: (flag: boolean) => void;
-  setDuration: (duration: number) => void;
-  setCurrentDuration: (curDuration: number) => void;
-  getMusicDetail: (id: number) => void;
-  checkMusicUrl: (id: number) => void;
   initPlayer: (id: number) => void;
   next: (lastId?: number, cb?: (id: number) => void) => void;
   prev: (lastId?: number, cb?: (id: number) => void) => void;
@@ -88,13 +80,7 @@ class Play extends React.Component<IProps, IState> {
       });
     }
 
-    const {
-      songId,
-      setSongId,
-      setCurrentDuration,
-      setPlayStatus,
-      initPlayer
-    } = this.props;
+    const { songId, setSongId, initPlayer } = this.props;
     // const { id } = this.props.match.params;
     setSongId(id);
 
@@ -111,9 +97,6 @@ class Play extends React.Component<IProps, IState> {
       !lastPlayerInstance && initPlayer(id); // 没有 实例 证明是 头一次打开（页面刷新了）
       return;
     }
-    setCurrentDuration(0);
-    setPlayStatus(false);
-
     // 将上一首歌 销毁
     // lastPlayerInstance && lastPlayerInstance.player.unload();
     initPlayer(id);
@@ -220,11 +203,6 @@ export default connect(
   (dispatch: Dispatch) => ({
     setSongId: (id: number) => dispatch(setSongId(id)),
     setPlayStatus: (flag: boolean) => dispatch(setPlayStatus(flag)),
-    setDuration: (duration: number) => dispatch(setDuration(duration)),
-    setCurrentDuration: (curduration: number) =>
-      dispatch(setCurrentDuration(curduration)),
-    getMusicDetail: (id: number) => dispatch(getMusicDetail(id)),
-    checkMusicUrl: (id: number) => dispatch(checkMusicUrl(id)),
     initPlayer: (id: number) => dispatch(initPlayer(id)),
     next: (id?: number, cb?: (id: number) => void) => dispatch(next(id, cb)),
     prev: (id?: number, cb?: (id: number) => void) => dispatch(prev(id, cb))
