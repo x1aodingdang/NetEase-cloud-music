@@ -29,7 +29,7 @@ export const initialState: IState = {
   isPlay: false, // 音乐是否在播放中
   duration: 0, // 当前音乐的时长  秒为单位
   curDuration: 0, // 当前音乐的播放中进度时长  秒为单位
-  playList: [452601948, 347230, 554241732],
+  playList: local(SETPLAYERLIST) || [],
   musicDetail: {} as IMusicDetail,
   musicUrl: {} as IMusicUrl
 };
@@ -47,6 +47,7 @@ export const reducer = (state: IState = initialState, action: IPlayAction) => {
     case SETCURRENTDURATION:
       return { ...state, curDuration: action.curDuration };
     case SETPLAYERLIST:
+      local(SETPLAYERLIST, action.playerList);
       return { ...state, playList: action.playerList };
     case SETMUSISDETAIL:
       return { ...state, musicDetail: action.musicDetail };

@@ -13,7 +13,7 @@ import {
 import "./index.scss";
 import Srcoll from "../../../components/Scroll";
 import { rankingLenFormat } from "../../../utils";
-import { setSongId } from "../../../store/actions/play";
+import { setSongId, setPlayerList } from "../../../store/actions/play";
 
 export interface IParams {
   id: string;
@@ -21,6 +21,7 @@ export interface IParams {
 export interface IProps extends RouteComponentProps<IParams> {
   getRankDetail: (opt: IHttpOpt) => void;
   setSongId: (id: number) => void;
+  setPlayerList: (list: number[]) => void;
 }
 
 export interface IState {
@@ -52,6 +53,11 @@ class RankingDetail extends React.Component<IProps, IState> {
   }
 
   goPlay = (id: number) => {
+    this.props.setPlayerList(
+      this.state.playlist.map(v => {
+        return v.id;
+      })
+    );
     // this.props.setSongId(id);
     this.props.history.push(`/play/${id}`);
   };
@@ -126,6 +132,7 @@ export default connect(
   () => ({}),
   (dispatch: Dispatch) => ({
     getRankDetail: (opt: IHttpOpt) => dispatch(getRankDetail(opt)),
-    setSongId: (id: number) => dispatch(setSongId(id))
+    setSongId: (id: number) => dispatch(setSongId(id)),
+    setPlayerList: (playerList: number[]) => dispatch(setPlayerList(playerList))
   })
 )(RankingDetail);

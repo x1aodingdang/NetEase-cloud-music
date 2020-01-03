@@ -60,8 +60,10 @@ export default class Player {
 
   // 时间进度变化
   progress(onProgress?: (curDuration: number) => void) {
-    const time = this.player.seek && (this.player.seek() as number);
-    typeof onProgress === "function" && onProgress(time);
+    try {
+      const time = this.player.seek() as number;
+      typeof onProgress === "function" && onProgress(time);
+    } catch {}
   }
 
   static setplayerlist(Player: Player) {

@@ -97,6 +97,13 @@ export const setCurrentDuration = (curDuration: number): ICurrentDuration => {
   };
 };
 
+export const setPlayerList = (playerList: number[]): ISetPlayerList => {
+  return {
+    type: SETPLAYERLIST,
+    playerList
+  };
+};
+
 export const setMusicDetail = (musicDetail: IMusicDetail): ISetMusicDetail => {
   return {
     type: SETMUSISDETAIL,
