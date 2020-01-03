@@ -41,13 +41,13 @@ const coverDefault = require("../../assets/images/play/disc_default.png");
 //  未完成
 // 1. songIdList 目前是写死的
 // 2. 后台播放有重大问题   应当把播放逻辑 迁移到 redux 这个页面只做展示  逻辑开始迁移...
-//     迁移到 redux
-//     getDetail
-//     checkMusicUrl
-//     getMusicUrl
-//     play
-//     next pre
-//     init
+//     迁移到 redux    ✅
+//     getDetail      ✅
+//     checkMusicUrl  ✅
+//     getMusicUrl    ✅
+//     play           ✅
+//     next pre       ✅
+//     init           ✅
 
 export interface IProps
   extends RouteComponentProps<{
@@ -66,8 +66,8 @@ export interface IProps
   getMusicDetail: (id: number) => void;
   checkMusicUrl: (id: number) => void;
   initPlayer: (id: number) => void;
-  next: (lastId?: number) => void;
-  prev: (lastId?: number) => void;
+  next: (lastId?: number, cb?: (id: number) => void) => void;
+  prev: (lastId?: number, cb?: (id: number) => void) => void;
 }
 
 export interface IState {}
@@ -102,9 +102,6 @@ class Play extends React.Component<IProps, IState> {
     // 如果相等 获取 页面信息（getDateil） 设置 player （Player.getLastInstance()）
     // else 切换到 id 歌曲  销毁上一首 再加载当前
     const res = id === songId;
-    // console.log("componentDidMount 执行了", res, id);
-
-    // getMusicDetail(id); // 这里可以 优化一下  放在 redux 以至于打开同一个歌曲的时候 在请求一次
 
     const lastPlayerInstance = Player.getLastInstance();
     if (res) {
@@ -124,17 +121,15 @@ class Play extends React.Component<IProps, IState> {
 
   next = (id: number) => {
     const { history, next } = this.props;
-    next(id);
-    // (id: number) => {
-    //   history.replace(`/play/${id}}`);
-    // }
-    // this.init(nextId);
+    next(id, (id: number) => {
+      history.replace(`/play/${id}`);
+    });
   };
   pre = (id: number) => {
     const { history, prev } = this.props;
-
-    // history.replace(`/play/${nextId}`);
-    prev(id);
+    prev(id, (id: number) => {
+      history.replace(`/play/${id}`);
+    });
   };
   changePlayStatu = (isPlay: boolean) => {
     const { playerInstance, setPlayStatus } = this.props;
@@ -231,7 +226,7 @@ export default connect(
     getMusicDetail: (id: number) => dispatch(getMusicDetail(id)),
     checkMusicUrl: (id: number) => dispatch(checkMusicUrl(id)),
     initPlayer: (id: number) => dispatch(initPlayer(id)),
-    next: (id?: number) => dispatch(next(id)),
-    prev: (id?: number) => dispatch(prev(id))
+    next: (id?: number, cb?: (id: number) => void) => dispatch(next(id, cb)),
+    prev: (id?: number, cb?: (id: number) => void) => dispatch(prev(id, cb))
   })
 )(Play);
