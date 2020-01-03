@@ -19,7 +19,6 @@ import { IMusicDetail, IMusicUrl } from "../reducers/play/interface";
 import { Toast } from "antd-mobile";
 import Player from "../../servers/player";
 import { StoreState } from "..";
-import { useHistory } from "react-router-dom";
 
 export interface ISetPlayerInstance {
   type: typeof SETPLAYERINSTANCE;
@@ -162,6 +161,7 @@ type IGetStateFun = () => StoreState;
 
 export const initPlayer = (id: number): any => {
   return (dispatch: Dispatch, getState: IGetStateFun) => {
+    console.log(getState);
     const {
       play: { playerInstance }
     } = getState();

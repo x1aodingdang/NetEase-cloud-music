@@ -6,11 +6,14 @@ import "antd-mobile/dist/antd-mobile.css";
 import App from "./router/index";
 import * as serviceWorker from "./serviceWorker";
 import { Provider } from "react-redux";
-import store from "./store/index";
+import configurstoreeStore, { history } from "./store/index";
+import { ConnectedRouter } from "connected-react-router";
 
 ReactDOM.render(
-  <Provider store={store}>
-    <App />
+  <Provider store={configurstoreeStore()}>
+    <ConnectedRouter history={history}>
+      <App />
+    </ConnectedRouter>
   </Provider>,
   document.getElementById("root")
 );

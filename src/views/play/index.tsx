@@ -18,7 +18,7 @@ import { RouteComponentProps } from "react-router-dom";
 import PlayProgress from "./progress";
 import { IMusicDetail, IMusicUrl } from "../../store/reducers/play/interface";
 const coverDefault = require("../../assets/images/play/disc_default.png");
-
+console.log(initPlayer(1));
 // 思考
 // 触发 play.songId  重新请求 songInfo
 // 1.  从外面点进来 播放页面  什么时候  应该切换 什么时候不切换   ✅
