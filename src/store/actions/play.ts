@@ -19,6 +19,7 @@ import { IMusicDetail, IMusicUrl } from "../reducers/play/interface";
 import { Toast } from "antd-mobile";
 import Player from "../../servers/player";
 import { StoreState } from "..";
+import { useHistory } from "react-router-dom";
 
 export interface ISetPlayerInstance {
   type: typeof SETPLAYERINSTANCE;
@@ -132,7 +133,9 @@ export const checkMusicUrl = (id: number): any => {
         return dispatch(getMusicUrl(id));
       }
       // 再调用 下一曲
-      Toast.info(res.message);
+      Toast.info(res.message, undefined, () => {
+        dispatch(next(id));
+      });
     });
   };
 };
