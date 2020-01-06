@@ -19,7 +19,7 @@ import { IMusicDetail, IMusicUrl } from "../reducers/play/interface";
 import { Toast } from "antd-mobile";
 import Player from "../../servers/player";
 import { StoreState } from "..";
-import { useHistory } from "react-router-dom";
+import history from "../../utils/history";
 
 export interface ISetPlayerInstance {
   type: typeof SETPLAYERINSTANCE;
@@ -209,6 +209,15 @@ export const next = (id?: number, cb?: (id: number) => void): any => {
       play: { playList, songId }
     } = getState();
     id = id || songId;
+    cb =
+      cb ||
+      ((nextId: number) => {
+        const res = history.location.pathname === `/play/${id}`;
+        // 如果是当前页面 才替换
+        if (res) {
+          history.replace(`/play/${nextId}`);
+        }
+      });
     const lastIdIndex = playList.indexOf(songId);
     if (lastIdIndex !== -1) {
       const nextId = playList[lastIdIndex + 1];
