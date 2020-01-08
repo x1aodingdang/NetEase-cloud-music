@@ -1,6 +1,6 @@
 import { $APICheckMusic } from "./apiList";
 
-export const API = "http://10.99.50.89:9000";
+export const API = process.env.REACT_APP_API || "http://localhost:9000";
 
 // 不需要  判断 code 码 等于200的接口
 const noCode200 = [$APICheckMusic];
