@@ -4,9 +4,9 @@
 
 ## 使用
 
-`npm start`
+`npm start`
 
-环境变量
+## 环境变量
 
 - REACT_APP_API (后端服务地址)
 - REACT_APP_SERVER_PROT (后端服务端口)
