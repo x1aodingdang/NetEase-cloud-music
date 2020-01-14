@@ -4,7 +4,9 @@
 
 ## 使用
 
-`npm start`
+> 请先把 [NeteaseCloudMusicApi](https://github.com/Binaryify/NeteaseCloudMusicApi) 项目 download 下来 并启动 (启动后的服务作为后端服务给本项目使用)
+
+`npm run dev`
 
 ## 环境变量
 
@@ -24,7 +26,7 @@
 ## 技术栈
 
 - react ts redux redux-thunk ant-mobile
-- [NeteaseCloudMusicApi](https://github.com/Binaryify/NeteaseCloudMusicApi) （使用这个来获取网易云数据）
+- [NeteaseCloudMusicApi](https://github.com/Binaryify/NeteaseCloudMusicApi) （使用这个来获取网易云数据）感谢大佬
 
 ## 预览
 

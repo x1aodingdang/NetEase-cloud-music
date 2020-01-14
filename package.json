@@ -24,6 +24,7 @@
     "typescript": "3.7.2"
   },
   "scripts": {
+    "dev": "PORT=4000 react-app-rewired start",
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "react-app-rewired test --env=jsdom"
