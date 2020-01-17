@@ -6,6 +6,7 @@ import Account from "../views/account/index";
 import Ranking from "../views/ranking/index";
 import RankingDetail from "../views/ranking/detail/index";
 import Play from "../views/play";
+import Search from "../views/search";
 
 // export interface iRouterList {
 
@@ -15,6 +16,12 @@ export default [
   {
     path: "/home",
     component: Home,
+    tabBar: true // 展示 底部 菜单
+    // header: true // 展示搜索头
+  },
+  {
+    path: "/search",
+    component: Search,
     tabBar: true // 展示 底部 菜单
     // header: true // 展示搜索头
   },

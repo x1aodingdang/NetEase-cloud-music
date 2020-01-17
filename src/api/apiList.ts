@@ -28,3 +28,9 @@ export const $APIGetMusicUrl = "/song/url";
  *  @example /check/music?id=1407358755
  */
 export const $APICheckMusic = "/check/music";
+
+/**
+ * @description 热搜列表(详细)  调用此接口,可获取热门搜索列表
+ * @example /search/hot/detail
+ */
+export const $APISearchHotDetail = "/search/hot/detail";

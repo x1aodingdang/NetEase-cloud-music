@@ -1,0 +1,47 @@
+@import "../../../../assets/style/var.scss";
+
+.search-hot-list {
+  .tit {
+    padding: 0 $bothPadding;
+    font-size: 0.42rem;
+  }
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+
+    .hotList-item {
+      margin-top: 0.3rem;
+      display: flex;
+      width: 50%;
+      align-items: center;
+
+      .rank {
+        font-size: 0.4rem;
+        color: #999;
+        flex-basis: 1rem;
+        text-align: center;
+
+        &.top4 {
+          color: #eb4d44;
+        }
+      }
+
+      .info {
+        .info-search-word {
+          color: #333;
+          font-size: 0.4rem;
+
+          .info-icon {
+            height: 0.4rem;
+          }
+        }
+
+        .info-content {
+          color: #999;
+          font-size: 0.3rem;
+        }
+      }
+    }
+  }
+}

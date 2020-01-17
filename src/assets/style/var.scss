@@ -2,4 +2,5 @@ $footerTabBarHeight: 1.44rem; // 底部tabber高度
 $homeHeaderHeight: 1.08rem; // Header 组件的高度
 $homeHeaderPadding: 0.12rem; // Header 组件的宽度
 $bothPadding: 0.48rem; // 页面布局 两边的间距
-$homeHeaderHeightReal: $homeHeaderHeight+($homeHeaderPadding * 2); // header 组件真实的高度
+$homeHeaderHeightReal: $homeHeaderHeight + ($homeHeaderPadding * 2); // header 组件真实的高度
+$searchHeight: 1.08rem; // search 框的高度

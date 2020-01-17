@@ -47,9 +47,12 @@ class Header extends React.Component<IProps> {
             title
           ) : (
             <input
-              className="search"
               type="text"
               placeholder="世间美好与你环环相扣"
+              onClick={() => {
+                console.log("test");
+                this.props.history.push("/search");
+              }}
             />
           )}
         </div>
