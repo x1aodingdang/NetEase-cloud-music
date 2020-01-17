@@ -45,6 +45,3 @@
 ![113](./docs/demo.gif)
 
 ## Roadmap
-
-<input type='checkbox' checked> false
-<input type='checkbox' checked> false
