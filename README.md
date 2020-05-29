@@ -1,6 +1,17 @@
 ## 仿网易云 app
 
-长路漫漫 唯 codeing 作伴
+戴上耳机我就是最靓的仔 😎😎😎
+
+## 预览
+
+### [demo](http://43.226.156.242/)
+
+![113](./docs/demo.gif)
+
+## 技术栈
+
+- react ts redux redux-thunk ant-mobile
+- [NeteaseCloudMusicApi](https://github.com/Binaryify/NeteaseCloudMusicApi) （使用这个来获取网易云数据）感谢大佬
 
 ## 使用
 
@@ -34,14 +45,5 @@
     `($env:REACT_APP_API = "http://localhost:9000") -and (npm start)`
   - ##### Linux, macOS (Bash)
     `REACT_APP_API=http://localhost:9000 npm start`
-
-## 技术栈
-
-- react ts redux redux-thunk ant-mobile
-- [NeteaseCloudMusicApi](https://github.com/Binaryify/NeteaseCloudMusicApi) （使用这个来获取网易云数据）感谢大佬
-
-## 预览
-
-![113](./docs/demo.gif)
 
 ## Roadmap
