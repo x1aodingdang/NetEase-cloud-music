@@ -6,7 +6,7 @@
 
 ### ~~[demo](http://43.226.156.242/)~~
 
-![demo gif](https://cdn.jsdelivr.net/gh/x1aodingdang/NetEase-cloud-music/docs/demo.gif)
+![demo gif](./docs/demo.gif)
 
 ## 技术栈
 
