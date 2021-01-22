@@ -4,9 +4,9 @@
 
 ## 预览
 
-### [demo](http://43.226.156.242/)
+### ~~[demo](http://43.226.156.242/)~~
 
-![113](./docs/demo.gif)
+![demo gif](https://cdn.jsdelivr.net/gh/x1aodingdang/NetEase-cloud-music/docs/demo.gif)
 
 ## 技术栈
 
